@@ -8,24 +8,61 @@
 }
 
 /* Custom Font Sizes */
-.text-sm { font-size: 0.85rem; }
-.text-xs { font-size: 0.8rem; }
-.text-xxs { font-size: 0.75rem; }
-.text-micro { font-size: 0.65rem; }
-.text-10 { font-size: 10px; }
+.text-sm {
+  font-size: 0.85rem;
+}
+
+.text-xs {
+  font-size: 0.8rem;
+}
+
+.text-xxs {
+  font-size: 0.75rem;
+}
+
+.text-micro {
+  font-size: 0.65rem;
+}
+
+.text-10 {
+  font-size: 10px;
+}
 
 /* Custom Line Height */
-.lh-12 { line-height: 1.2; }
+.lh-12 {
+  line-height: 1.2;
+}
 
 /* Custom Text Colors */
-.text-title-dark { color: #333; }
-.text-brown { color: #8e735b; }
-.text-red-dark { color: #b91c1c; }
+.text-title-dark {
+  color: #333;
+}
+
+.text-brown {
+  color: #8e735b;
+}
+
+.text-red-dark {
+  color: #b91c1c;
+}
 
 /* Wrapper Sizes */
-.icon-wrapper-lg { width: 50px; height: 50px; }
-.icon-wrapper-md { width: 44px; height: 44px; }
-.icon-wrapper-xl { width: 56px; height: 56px; } /* Bottom Nav Plus Button */
+.icon-wrapper-lg {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-wrapper-md {
+  width: 44px;
+  height: 44px;
+}
+
+.icon-wrapper-xl {
+  width: 56px;
+  height: 56px;
+}
+
+/* Bottom Nav Plus Button */
 
 /* Wrapper Theme Colors */
 .bg-icon-brown {
@@ -44,16 +81,69 @@
   flex-shrink: 0;
 }
 
-.bg-cat-food { background-color: #FF3B30; }
-.bg-cat-transport { background-color: #FF9500; }
-.bg-cat-entertainment { background-color: #FFCC00; }
-.bg-cat-education { background-color: #34C759; }
-.bg-cat-shopping { background-color: #007AFF; }
-.bg-cat-health { background-color: #AF52DE; }
-.bg-cat-others { background-color: #10eccf; }
+.bg-cat-food {
+  background-color: #FF3B30;
+}
+
+.bg-cat-transport {
+  background-color: #FF9500;
+}
+
+.bg-cat-entertainment {
+  background-color: #FFCC00;
+}
+
+.bg-cat-education {
+  background-color: #34C759;
+}
+
+.bg-cat-shopping {
+  background-color: #007AFF;
+}
+
+.bg-cat-health {
+  background-color: #AF52DE;
+}
+
+.bg-cat-others {
+  background-color: #10eccf;
+}
 
 
 .table-custom-header th {
   background-color: #f8f5ef !important;
   color: #333 !important;
+}
+
+/*new.html*/
+/* =========================================*/
+
+/* The beige input fields */
+.bg-input-beige {
+  background-color: #ebe5db !important;
+  color: #333 !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+/* Force consistency for all input group icons/labels */
+.icon-box {
+  width: 55px !important;
+  min-width: 55px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff !important;
+  padding: 0 !important;
+  border-color: #ced4da;
+}
+
+/* Specific alignment for the Description field icon */
+.icon-box-top {
+  align-items: flex-start !important;
+  padding-top: 0.75rem !important;
+}
+
+/* General Layout helpers */
+.resize-none {
+  resize: none;
 }
