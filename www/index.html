@@ -4,33 +4,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <script src="cordova.js"></script>
   <title>Personal Tracker</title>
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
   <link rel="stylesheet" href="components/css/main.css">
-
 </head>
 
 <body>
-  <!-- Top Nav -->
-  <nav class="navbar navbar-dark bg-dark fixed-top" style="z-index: 1050;">
+  <nav class="navbar navbar-dark bg-dark fixed-top z-top-nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Personal Expense</a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-        aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="offcanvas offcanvas-end text-bg-dark w-75" tabindex="-1" id="offcanvasDarkNavbar"
-        aria-labelledby="offcanvasDarkNavbarLabel">
-
+      <div class="offcanvas offcanvas-end text-bg-dark w-75" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <div class="offcanvas-body">
@@ -49,50 +42,41 @@
             </li>
           </ul>
         </div>
-
       </div>
     </div>
   </nav>
 
-  <section class="container" style="margin-top: 4.5rem; padding-bottom: 4.5rem;">
+  <section class="container main-content-wrapper">
 
-    <!-- Total Spent -->
     <div class="card bg-light border-0 shadow-sm w-100 mb-2">
       <div class="card-body p-3 d-flex align-items-center">
-
-        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-          style="width: 50px; height: 50px; background-color: #f5ebe3; color: #8e735b;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 icon-wrapper-lg bg-icon-brown">
           <img src="/www/components/images/wallet2.svg" width="22" height="22" fill="currentColor" alt="TotalSpent">
         </div>
 
         <div class="flex-grow-1 ms-3">
-          <div class="fw-medium mb-1" style="font-size: 0.8rem; color: #8e735b;">Total Spent</div>
+          <div class="fw-medium mb-1 text-xs text-brown">Total Spent</div>
           <h2 class="mb-0 fw-bold" id="totalSpent">RM 100,000,000</h2>
-          <div class="text-secondary mb-1" style="font-size: 0.8rem;">Spent this Month</div>
+          <div class="text-secondary mb-1 text-xs">Spent this Month</div>
         </div>
-
       </div>
     </div>
 
     <div class="card mb-2 bg-light border-0 shadow-sm">
       <div class="card-body p-3">
-
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h6 class="mb-0 fw-bold" style="color: #333;">Spending Breakdown</h6>
+          <h6 class="mb-0 fw-bold text-title-dark">Spending Breakdown</h6>
         </div>
-
         <div>
           <img src="components/images/sample.jpg" class="img-fluid mx-auto" alt="Charts">
         </div>
       </div>
     </div>
 
-    <!-- Total By Category -->
     <div class="card bg-light border-0 shadow-sm w-100 mb-2">
       <div class="card-body p-3">
-
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h6 class="mb-0 fw-bold text-title">Total By Categories</h6>
+          <h6 class="mb-0 fw-bold text-title-dark">Total By Categories</h6>
         </div>
 
         <div class="d-flex align-items-center py-2 border-bottom">
@@ -124,113 +108,90 @@
         </div>
 
         <div class="d-flex align-items-center py-2 border-bottom">
-          <div class="rounded category-swatch bg-cat-education"></div>
-          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
-          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="rounded category-swatch bg-cat-shopping"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Shopping</div>
+          <div class="fw-medium text-sm">RM 111.25</div>
           <div class="ms-2 text-black-50"></div>
         </div>
 
         <div class="d-flex align-items-center py-2 border-bottom">
-          <div class="rounded category-swatch bg-cat-education"></div>
-          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
-          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="rounded category-swatch bg-cat-health"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Health</div>
+          <div class="fw-medium text-sm">RM 111.25</div>
           <div class="ms-2 text-black-50"></div>
         </div>
 
         <div class="d-flex align-items-center py-2">
-          <div class="rounded category-swatch bg-cat-education"></div>
-          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
-          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="rounded category-swatch bg-cat-others"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Others</div>
+          <div class="fw-medium text-sm">RM 111.25</div>
           <div class="ms-2 text-black-50"></div>
         </div>
-
       </div>
     </div>
 
-    <!--Number Trans & Avg-->
     <div class="row g-2 mb-2">
-
-      <!--Number Trans-->
       <div class="col-6">
         <div class="card bg-light h-100 border-0 shadow-sm">
           <div class="card-body p-2 d-flex align-items-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-              style="width: 44px; height: 44px; background-color: #f5ebe3; color: #8e735b;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 icon-wrapper-md bg-icon-brown">
               <img src="/www/components/images/receipt-cutoff.svg" alt="Total Transactions">
             </div>
-
             <div class="ms-2">
               <h5 class="mb-0 fw-bold" id="numTransactions">Total Trans</h5>
-              <div class="text-secondary" style="font-size: 0.75rem; line-height: 1.2;">Transactions</div>
-              <div class="text-black-50" style="font-size: 0.65rem;">This Month</div>
+              <div class="text-secondary text-xxs lh-12">Transactions</div>
+              <div class="text-black-50 text-micro">This Month</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!--Avg-->
       <div class="col-6">
         <div class="card bg-light h-100 border-0 shadow-sm">
           <div class="card-body p-2 d-flex align-items-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-              style="width: 44px; height: 44px; background-color: #f5ebe3; color: #8e735b;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 icon-wrapper-md bg-icon-brown">
               <img src="/www/components/images/graph-up-arrow.svg" alt="Avg Spending">
             </div>
-
             <div class="ms-2">
               <h5 class="mb-0 fw-bold fs-6" id="avgSpend">RM Test</h5>
-              <div class="text-secondary" style="font-size: 0.75rem; line-height: 1.2;">Average Spend</div>
-              <div class="text-black-50" style="font-size: 0.65rem;">Per Transaction</div>
+              <div class="text-secondary text-xxs lh-12">Average Spend</div>
+              <div class="text-black-50 text-micro">Per Transaction</div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
-    <!--Highest Trans-->
     <div class="card bg-light border-0 shadow-sm w-100">
       <div class="card-body p-3">
-
-        <h6 class="fw-bold text-danger mb-3" style="font-size: 0.85rem;">Highest Expense</h6>
+        <h6 class="fw-bold text-danger mb-3 text-sm">Highest Expense</h6>
 
         <div class="row align-items-center g-0">
-
           <div class="col-7 pe-3 border-end">
             <div class="d-flex align-items-center">
-
-              <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                style="width: 50px; height: 50px; background-color: #fdeaea; color: #b91c1c;">
-                <img src="/www/components/images/cart2.svg" width="22" height="22" fill="currentColor"
-                  alt="Highest Expense">
+              <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 icon-wrapper-lg bg-icon-red">
+                <img src="/www/components/images/cart2.svg" width="22" height="22" fill="currentColor" alt="Highest Expense">
               </div>
-
               <div class="ms-3">
-                <h4 class="mb-0 fw-bold" style="color: #b91c1c;">RM 155.00</h4>
-                <div class="text-dark fw-medium" style="font-size: 0.85rem; line-height: 1.2;">Food</div>
-
-                <div class="text-secondary d-flex align-items-center mt-1" style="font-size: 0.75rem;">
-                  <img src="/www/components/images/calendar3.svg" width="10" height="10" fill="currentColor"
-                    alt="Calendar">
-                  1 Jun 2026
+                <h4 class="mb-0 fw-bold text-red-dark">RM 155.00</h4>
+                <div class="text-dark fw-medium text-sm lh-12">Food</div>
+                <div class="text-secondary d-flex align-items-center mt-1 text-xxs">
+                  <img src="/www/components/images/calendar3.svg" width="10" height="10" fill="currentColor" alt="Calendar">
+                  <span class="ms-1">1 Jun 2026</span>
                 </div>
-
               </div>
             </div>
           </div>
 
           <div class="col-5 ps-3">
             <div class="d-flex flex-column justify-content-center h-100">
-              <div class="d-flex align-items-center mb-1" style="font-size: 0.75rem; color: #8e735b;">
-                <img src="/www/components/images/file-text.svg" alt="Description" width="12" height="12"
-                  fill="currentColor">
-                Description
+              <div class="d-flex align-items-center mb-1 text-xxs text-brown">
+                <img src="/www/components/images/file-text.svg" alt="Description" width="12" height="12" fill="currentColor">
+                <span class="ms-1">Description</span>
               </div>
-
-              <div class="text-dark fw-medium" style="font-size: 0.8rem; line-height: 1.2;">
+              <div class="text-dark fw-medium text-xs lh-12">
                 Grocery Shopping
               </div>
-
             </div>
           </div>
         </div>
@@ -239,22 +200,19 @@
 
   </section>
 
-  <!-- Bottom Nav -->
   <nav class="navbar bg-dark fixed-bottom p-0 shadow-lg">
     <ul class="nav w-100 nav-justified align-items-center">
 
       <li class="nav-item">
         <a href="index.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
           <img src="components/images/home.png" alt="HOME" width="24" height="24">
-          <span style="font-size: 10px;">HOME</span>
+          <span class="text-10">HOME</span>
         </a>
       </li>
 
       <li class="nav-item position-relative">
         <a href="new.html" class="nav-link d-flex justify-content-center">
-          <div
-            class="bg-light rounded-circle shadow d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle"
-            style="width: 56px; height: 56px;">
+          <div class="bg-light rounded-circle shadow d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle icon-wrapper-xl">
             <img src="components/images/plus-circle-fill.svg" alt="New Expense" width="24" height="24">
           </div>
         </a>
@@ -263,9 +221,10 @@
       <li class="nav-item">
         <a href="transaction.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
           <img src="components/images/transaction.png" alt="TRANSACTIONS" width="24" height="24">
-          <span style="font-size: 10px;">TRANSACTIONS</span>
+          <span class="text-10">TRANSACTIONS</span>
         </a>
       </li>
+
     </ul>
   </nav>
 
