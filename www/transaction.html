@@ -9,13 +9,14 @@
   <script src="cordova.js"></script>
   <title>Personal Tracker</title>
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
+  <link rel="stylesheet" href="components/css/main.css">
 
 </head>
 
 <body>
   <!-- Top Nav -->
   <div class="container">
-    <nav class="navbar navbar-dark bg-dark fixed-top" style="z-index: 1050;">
+    <nav class="navbar navbar-dark bg-dark fixed-top z-top-nav" style="z-index: 1050;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Personal Expense</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
@@ -50,86 +51,189 @@
     </nav>
   </div>
 
-  <div class="container-fluid pt-5 mt-3">
-    <div class="table-responsive">
-      <table class="table table-striped w-100">
-        <thead>
-          <tr>
-            <th scope="col" class="text-nowrap">#ID</th>
-            <th scope="col" class="text-nowrap">Date</th>
-            <th scope="col" class="text-nowrap">Amount (RM)</th>
-            <th scope="col" class="text-nowrap">Category</th>
-            <th scope="col" class="text-nowrap">Description</th>
-            <th scope="col" class="text-nowrap">Date Created</th>
-            <th scope="col" class="text-nowrap">Date Updated</th>
-          </tr>
-        </thead>
+  <section class="container main-content-wrapper">
+    <div class="card bg-light border-0 shadow-sm w-100 mb-2">
+      <div class="card-body p-3">
 
-        <tbody>
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1001</th>
-            <td class="text-nowrap">2026-06-01</td>
-            <td>15.50</td>
-            <td>Food</td>
-            <td>Lunch at campus cafe</td>
-            <td>2026-06-01 13:05</td>
-            <td>2026-06-01 13:05</td>
-          </tr>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0 fw-bold text-dark">Expense List</h5>
+        </div>
 
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1002</th>
-            <td class="text-nowrap">2026-06-02</td>
-            <td>45.00</td>
-            <td>Transport</td>
-            <td>Weekly train pass</td>
-            <td>2026-06-02 08:15</td>
-            <td>2026-06-02 08:15</td>
-          </tr>
+        <div class="table-responsive bg-white rounded border">
+          <table class="table table-hover align-middle mb-0 w-100">
 
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1003</th>
-            <td class="text-nowrap">2026-06-03</td>
-            <td>120.00</td>
-            <td>Education</td>
-            <td>Semester textbooks</td>
-            <td>2026-06-03 10:30</td>
-            <td>2026-06-04 09:12</td>
-          </tr>
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col" class="text-nowrap px-3 py-3 border-0">#ID</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Date</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Amount (RM)</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Category</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Description</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Date Created</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Date Updated</th>
+                <th scope="col" class="text-nowrap border-0 py-3 text-center">Action</th>
+              </tr>
+            </thead>
 
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1004</th>
-            <td class="text-nowrap">2026-06-03</td>
-            <td>25.00</td>
-            <td>Entertainment</td>
-            <td>Movie ticket</td>
-            <td>2026-06-03 19:45</td>
-            <td>2026-06-03 19:45</td>
-          </tr>
+            <tbody class="border-top-0">
 
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1005</th>
-            <td class="text-nowrap">2026-06-04</td>
-            <td>89.90</td>
-            <td>Shopping</td>
-            <td>New jacket</td>
-            <td>2026-06-04 14:20</td>
-            <td>2026-06-04 14:20</td>
-          </tr>
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1001</th>
+                <td class="text-nowrap border-light">2026-06-01</td>
+                <td class="border-light">15.50</td>
+                <td class="border-light">Food</td>
+                <td class="border-light">Lunch at campus cafe</td>
+                <td class="text-nowrap border-light">
+                  2026-06-01<br><span class="text-muted small">13:05</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-01<br><span class="text-muted small">13:05</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
 
-          <tr>
-            <th scope="row" class="text-nowrap">EXP-1006</th>
-            <td class="text-nowrap">2026-06-04</td>
-            <td>35.00</td>
-            <td>Health</td>
-            <td>Pharmacy vitamins</td>
-            <td>2026-06-04 16:05</td>
-            <td>2026-06-04 16:10</td>
-          </tr>
-        </tbody>
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1002</th>
+                <td class="text-nowrap border-light">2026-06-02</td>
+                <td class="border-light">45.00</td>
+                <td class="border-light">Transport</td>
+                <td class="border-light">Weekly train pass</td>
+                <td class="text-nowrap border-light">
+                  2026-06-02<br><span class="text-muted small">08:15</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-02<br><span class="text-muted small">08:15</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
 
-      </table>
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1003</th>
+                <td class="text-nowrap border-light">2026-06-03</td>
+                <td class="border-light">120.00</td>
+                <td class="border-light">Education</td>
+                <td class="border-light">Semester textbooks</td>
+                <td class="text-nowrap border-light">
+                  2026-06-03<br><span class="text-muted small">10:30</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-04<br><span class="text-muted small">09:12</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1004</th>
+                <td class="text-nowrap border-light">2026-06-03</td>
+                <td class="border-light">25.00</td>
+                <td class="border-light">Entertainment</td>
+                <td class="border-light">Movie ticket</td>
+                <td class="text-nowrap border-light">
+                  2026-06-03<br><span class="text-muted small">19:45</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-03<br><span class="text-muted small">19:45</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1005</th>
+                <td class="text-nowrap border-light">2026-06-04</td>
+                <td class="border-light">89.90</td>
+                <td class="border-light">Shopping</td>
+                <td class="border-light">New jacket</td>
+                <td class="text-nowrap border-light">
+                  2026-06-04<br><span class="text-muted small">14:20</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-04<br><span class="text-muted small">14:20</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="text-nowrap px-3 border-light">EXP-1006</th>
+                <td class="text-nowrap border-light">2026-06-04</td>
+                <td class="border-light">35.00</td>
+                <td class="border-light">Health</td>
+                <td class="border-light">Pharmacy vitamins</td>
+                <td class="text-nowrap border-light">
+                  2026-06-04<br><span class="text-muted small">16:05</span>
+                </td>
+                <td class="text-nowrap border-light">
+                  2026-06-04<br><span class="text-muted small">16:10</span>
+                </td>
+                <td class="border-light">
+                  <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button class="btn btn-light border-0 d-flex align-items-center justify-content-center p-2"
+                      title="Edit">
+                      <img src="components/images/pencil-square.svg" width="16" height="16" alt="Edit">
+                    </button>
+                    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2" title="Delete">
+                      <img src="components/images/trash.svg" width="16" height="16" alt="Delete">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Bottom Nav -->
   <div class="container">

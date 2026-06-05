@@ -51,3 +51,9 @@
 .bg-cat-shopping { background-color: #007AFF; }
 .bg-cat-health { background-color: #AF52DE; }
 .bg-cat-others { background-color: #10eccf; }
+
+
+.table-custom-header th {
+  background-color: #f8f5ef !important;
+  color: #333 !important;
+}
