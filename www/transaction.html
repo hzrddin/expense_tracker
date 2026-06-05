@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="cordova.js"></script>
+  <title>Personal Tracker</title>
+  <link rel="stylesheet" href="components/css/bootstrap.min.css">
+
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <div class="container">
+    <nav class="navbar navbar-dark bg-dark fixed-top" style="z-index: 1050;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Personal Expense</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+          aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark w-75" tabindex="-1" id="offcanvasDarkNavbar"
+          aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="transaction.html">Transactions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="new.html">New Expense</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="log.html">Activity Log</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container-fluid pt-5 mt-3">
+    <div class="table-responsive">
+      <table class="table table-striped w-100">
+        <thead>
+          <tr>
+            <th scope="col" class="text-nowrap">#ID</th>
+            <th scope="col" class="text-nowrap">Date</th>
+            <th scope="col" class="text-nowrap">Amount (RM)</th>
+            <th scope="col" class="text-nowrap">Category</th>
+            <th scope="col" class="text-nowrap">Description</th>
+            <th scope="col" class="text-nowrap">Date Created</th>
+            <th scope="col" class="text-nowrap">Date Updated</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1001</th>
+            <td class="text-nowrap">2026-06-01</td>
+            <td>15.50</td>
+            <td>Food</td>
+            <td>Lunch at campus cafe</td>
+            <td>2026-06-01 13:05</td>
+            <td>2026-06-01 13:05</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1002</th>
+            <td class="text-nowrap">2026-06-02</td>
+            <td>45.00</td>
+            <td>Transport</td>
+            <td>Weekly train pass</td>
+            <td>2026-06-02 08:15</td>
+            <td>2026-06-02 08:15</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1003</th>
+            <td class="text-nowrap">2026-06-03</td>
+            <td>120.00</td>
+            <td>Education</td>
+            <td>Semester textbooks</td>
+            <td>2026-06-03 10:30</td>
+            <td>2026-06-04 09:12</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1004</th>
+            <td class="text-nowrap">2026-06-03</td>
+            <td>25.00</td>
+            <td>Entertainment</td>
+            <td>Movie ticket</td>
+            <td>2026-06-03 19:45</td>
+            <td>2026-06-03 19:45</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1005</th>
+            <td class="text-nowrap">2026-06-04</td>
+            <td>89.90</td>
+            <td>Shopping</td>
+            <td>New jacket</td>
+            <td>2026-06-04 14:20</td>
+            <td>2026-06-04 14:20</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="text-nowrap">EXP-1006</th>
+            <td class="text-nowrap">2026-06-04</td>
+            <td>35.00</td>
+            <td>Health</td>
+            <td>Pharmacy vitamins</td>
+            <td>2026-06-04 16:05</td>
+            <td>2026-06-04 16:10</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="container">
+    <nav class="navbar bg-dark fixed-bottom p-0 shadow-lg">
+      <ul class="nav w-100 nav-justified align-items-center">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
+            <img src="components/images/home.png" alt="HOME" width="24" height="24">
+            <span style="font-size: 10px;">HOME</span>
+          </a>
+        </li>
+        <li class="nav-item position-relative">
+          <a href="new.html" class="nav-link d-flex justify-content-center">
+            <div
+              class="bg-light rounded-circle shadow d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle"
+              style="width: 56px; height: 56px;">
+              <img src="components/images/plus-circle-fill.svg" alt="New Expense" width="24" height="24">
+            </div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="transaction.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
+            <img src="components/images/transaction.png" alt="TRANSACTIONS" width="24" height="24">
+            <span style="font-size: 10px;">TRANSACTIONS</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <script src="components/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
