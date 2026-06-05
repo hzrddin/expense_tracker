@@ -1,0 +1,23 @@
+/*Total By Cat*/
+.text-title {
+  color: #333;
+}
+
+.text-sm {
+  font-size: 0.85rem;
+}
+
+/* Category Color Swatches */
+.category-swatch {
+  width: 16px;
+  height: 16px;
+}
+
+.bg-cat-food { background-color: #1a1a5a; }
+.bg-cat-transport { background-color: #6a5acd; }
+.bg-cat-entertainment { background-color: #9370db; }
+.bg-cat-education { background-color: #4169e1; }
+.bg-cat-shopping { background-color: #3cb371; }
+.bg-cat-health { background-color: #3cb371; }
+.bg-cat-others { background-color: #3cb371; }
+

@@ -9,6 +9,7 @@
   <script src="cordova.js"></script>
   <title>Personal Tracker</title>
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
+  <link rel="stylesheet" href="components/css/main.css">
 
 </head>
 
@@ -53,23 +54,20 @@
     </div>
   </nav>
 
-  <section class="container" style="margin-top: 5rem; padding-bottom: 5rem;">
+  <section class="container" style="margin-top: 4.5rem; padding-bottom: 4.5rem;">
 
-    <div class="card bg-light border-0 shadow-sm w-100 mb-3">
+    <!-- Total Spent -->
+    <div class="card bg-light border-0 shadow-sm w-100 mb-2">
       <div class="card-body p-3 d-flex align-items-center">
 
         <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
           style="width: 50px; height: 50px; background-color: #f5ebe3; color: #8e735b;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wallet2"
-            viewBox="0 0 16 16">
-            <path
-              d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
-          </svg>
+          <img src="/www/components/images/wallet2.svg" width="22" height="22" fill="currentColor" alt="TotalSpent">
         </div>
 
         <div class="flex-grow-1 ms-3">
           <div class="fw-medium mb-1" style="font-size: 0.8rem; color: #8e735b;">Total Spent</div>
-          <h2 class="mb-0 fw-bold" id="totalSpent">Total Spent</h2>
+          <h2 class="mb-0 fw-bold" id="totalSpent">RM 100,000,000</h2>
           <div class="text-secondary mb-1" style="font-size: 0.8rem;">Spent this Month</div>
         </div>
 
@@ -77,10 +75,75 @@
     </div>
 
     <div class="card mb-2 bg-light border-0 shadow-sm">
-      <div class="card-body">
+      <div class="card-body p-3">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0 fw-bold" style="color: #333;">Spending Breakdown</h6>
+        </div>
+
         <div>
           <img src="components/images/sample.jpg" class="img-fluid mx-auto" alt="Charts">
         </div>
+      </div>
+    </div>
+
+    <!-- Total By Category -->
+    <div class="card bg-light border-0 shadow-sm w-100 mb-2">
+      <div class="card-body p-3">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0 fw-bold text-title">Total By Categories</h6>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-food"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Food</div>
+          <div class="fw-medium text-sm">RM 266.25</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-transport"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Transport</div>
+          <div class="fw-medium text-sm">RM 258.75</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-entertainment"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Entertainment</div>
+          <div class="fw-medium text-sm">RM 185.00</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-education"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
+          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-education"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
+          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2 border-bottom">
+          <div class="rounded category-swatch bg-cat-education"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
+          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
+        <div class="d-flex align-items-center py-2">
+          <div class="rounded category-swatch bg-cat-education"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">Education</div>
+          <div class="fw-medium text-sm">RM 118.75</div>
+          <div class="ms-2 text-black-50"></div>
+        </div>
+
       </div>
     </div>
 
