@@ -44,10 +44,10 @@
   flex-shrink: 0;
 }
 
-.bg-cat-food { background-color: #1a1a5a; }
-.bg-cat-transport { background-color: #6a5acd; }
-.bg-cat-entertainment { background-color: #9370db; }
-.bg-cat-education { background-color: #4169e1; }
-.bg-cat-shopping { background-color: #3cb371; }
-.bg-cat-health { background-color: #3cb371; }
-.bg-cat-others { background-color: #3cb371; }
+.bg-cat-food { background-color: #FF3B30; }
+.bg-cat-transport { background-color: #FF9500; }
+.bg-cat-entertainment { background-color: #FFCC00; }
+.bg-cat-education { background-color: #34C759; }
+.bg-cat-shopping { background-color: #007AFF; }
+.bg-cat-health { background-color: #AF52DE; }
+.bg-cat-others { background-color: #10eccf; }
