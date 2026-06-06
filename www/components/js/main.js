@@ -1,8 +1,7 @@
 // Initialize array from localStorage, or empty array if none exists
 let fincRec = JSON.parse(localStorage.getItem('history')) || [];
 
-// Render immediately on page load
-renderLogs();
+// Notice: Removed the raw renderLogs() call from here!
 
 function saveRecord() {
   // Get values from the form
@@ -20,16 +19,16 @@ function saveRecord() {
     amount: amount,
     date: date,
     category: category,
-    description: description, // Don't forget to save the description!
+    description: description, 
     dateCreated: new Date().toLocaleDateString(),
     timeCreated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   };
 
+  alert("Expense Succcessfully Saved!");
+
   // Update array & local storage
   fincRec.push(newRecord);
   localStorage.setItem('history', JSON.stringify(fincRec));
-  
-  // Re-render the table and clear the form (optional but good practice)
   renderLogs();
 }
 
@@ -37,11 +36,19 @@ function saveRecord() {
 function renderLogs() {
   const logBody = document.getElementById('expenseTableBody');
   
+  // Extra safety net: If logBody doesn't exist on this page, stop running the function
+  if (!logBody) return; 
+
   // Loop each row and build the string
-  let rows = ""; // Create an empty bucket
+  let rows = ""; 
 
   fincRec.forEach((record) => {
-    // Add each row to the bucket
+    // Logic for the Date Updated column
+    const updateDisplay = (record.dateUpdated && record.dateUpdated !== "") 
+      ? `${record.dateUpdated}<br><span class="text-muted small">${record.timeUpdated}</span>` 
+      : "N/A";
+
+    // Build the row (Now with 8 columns!)
     rows += `
       <tr>
         <th scope="row" class="text-nowrap px-3 border-light">${record.id}</th>
@@ -51,6 +58,9 @@ function renderLogs() {
         <td class="border-light">${record.description}</td>
         <td class="text-nowrap border-light">
           ${record.dateCreated}<br><span class="text-muted small">${record.timeCreated}</span>
+        </td>
+        <td class="text-nowrap border-light">
+          ${updateDisplay}
         </td>
         <td class="border-light">
           <div class="d-flex align-items-center justify-content-center gap-2">
@@ -71,8 +81,17 @@ function renderLogs() {
 }
 
 function clearLogs() {
-  // Changed studRecord to fincRec
-  fincRec = []; 
+  fincRec = [];
   localStorage.removeItem('history');
   renderLogs();
 }
+
+// Wait for the HTML structure to fully load
+document.addEventListener('DOMContentLoaded', function () {
+  const logBody = document.getElementById('expenseTableBody');
+  
+  // If the table body exists, we are currently on transaction.html
+  if (logBody) {
+    renderLogs();
+  }
+});
