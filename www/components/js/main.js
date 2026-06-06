@@ -34,12 +34,12 @@ function nextLogId() {
 
 function writeLog(action, relatedExpenseId) {
   const logs = getLogs();
-  const now  = new Date();
+  const now = new Date();
   logs.push({
-    id:        nextLogId(),
-    date:      now.toLocaleDateString(),
-    time:      now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    action:    action,
+    id: nextLogId(),
+    date: now.toLocaleDateString(),
+    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    action: action,
     relatedId: relatedExpenseId || '—'
   });
   saveLogs(logs);
@@ -79,10 +79,10 @@ function resetFieldStates() {
 // New Expense
 
 function saveRecord() {
-  const amountRaw  = document.getElementById('expenseAmount').value.trim();
-  const date       = document.getElementById('expenseDate').value.trim();
-  const category   = document.getElementById('expenseCategory').value;
-  const description= document.getElementById('expenseDescription').value.trim();
+  const amountRaw = document.getElementById('expenseAmount').value.trim();
+  const date = document.getElementById('expenseDate').value.trim();
+  const category = document.getElementById('expenseCategory').value;
+  const description = document.getElementById('expenseDescription').value.trim();
 
   // Reset previous states before re-validating
   resetFieldStates();
@@ -125,10 +125,10 @@ function saveRecord() {
 
   const now = new Date();
   const newRecord = {
-    id:          nextExpenseId(),
-    amount:      parseFloat(amountRaw).toFixed(2),
-    date:        date,
-    category:    category,
+    id: nextExpenseId(),
+    amount: parseFloat(amountRaw).toFixed(2),
+    date: date,
+    category: category,
     description: description,
     dateCreated: now.toLocaleDateString(),
     timeCreated: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -143,9 +143,9 @@ function saveRecord() {
   writeLog('Added expense', newRecord.id);
 
   // Reset form and clear all validation states
-  document.getElementById('expenseAmount').value    = '';
-  document.getElementById('expenseDate').value      = getTodayISO();
-  document.getElementById('expenseCategory').value  = '';
+  document.getElementById('expenseAmount').value = '';
+  document.getElementById('expenseDate').value = getTodayISO();
+  document.getElementById('expenseCategory').value = '';
   document.getElementById('expenseDescription').value = '';
   resetFieldStates();
 
@@ -308,28 +308,28 @@ function openEditModal(id) {
     if (el) el.classList.remove('is-invalid', 'is-valid');
   });
 
-  document.getElementById('editId').value           = record.id;
-  document.getElementById('editAmount').value        = record.amount;
-  document.getElementById('editDate').value          = record.date;
-  document.getElementById('editCategory').value      = record.category;
-  document.getElementById('editDescription').value   = record.description;
+  document.getElementById('editId').value = record.id;
+  document.getElementById('editAmount').value = record.amount;
+  document.getElementById('editDate').value = record.date;
+  document.getElementById('editCategory').value = record.category;
+  document.getElementById('editDescription').value = record.description;
 
   new bootstrap.Modal(document.getElementById('editExpenseModal')).show();
 }
 
 function saveEdit() {
-  const id          = document.getElementById('editId').value;
-  const amountRaw   = document.getElementById('editAmount').value.trim();
-  const date        = document.getElementById('editDate').value.trim();
-  const category    = document.getElementById('editCategory').value;
+  const id = document.getElementById('editId').value;
+  const amountRaw = document.getElementById('editAmount').value.trim();
+  const date = document.getElementById('editDate').value.trim();
+  const category = document.getElementById('editCategory').value;
   const description = document.getElementById('editDescription').value.trim();
 
   // Validate inline
   let valid = true;
 
   const editAmount = document.getElementById('editAmount');
-  const editDate   = document.getElementById('editDate');
-  const editCat    = document.getElementById('editCategory');
+  const editDate = document.getElementById('editDate');
+  const editCat = document.getElementById('editCategory');
 
   if (!amountRaw || isNaN(parseFloat(amountRaw)) || parseFloat(amountRaw) <= 0) {
     editAmount.classList.add('is-invalid'); valid = false;
@@ -352,13 +352,13 @@ function saveEdit() {
   if (!valid) return;
 
   const records = getRecords();
-  const idx     = records.findIndex(r => r.id === id);
+  const idx = records.findIndex(r => r.id === id);
   if (idx === -1) return;
 
   const now = new Date();
-  records[idx].amount      = parseFloat(amountRaw).toFixed(2);
-  records[idx].date        = date;
-  records[idx].category    = category;
+  records[idx].amount = parseFloat(amountRaw).toFixed(2);
+  records[idx].date = date;
+  records[idx].category = category;
   records[idx].description = description;
   records[idx].dateUpdated = now.toLocaleDateString();
   records[idx].timeUpdated = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -424,7 +424,7 @@ function showToast(message, type = 'success') {
   `);
 
   const toastEl = document.getElementById(id);
-  const toast   = new bootstrap.Toast(toastEl, { delay: 3000 });
+  const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
   toast.show();
   toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
 }
@@ -434,5 +434,77 @@ document.addEventListener('DOMContentLoaded', function () {
   // Render exist table
   renderTransactions();
   renderActivityLog();
+  filterSumAll();
 });
 
+//Set Avg
+function setAverageSpend(amt, totalTrans) {
+  const avg = totalTrans === 0 ? 0 : amt / totalTrans;
+  document.getElementById("avgSpend").innerHTML = "RM " + avg.toFixed(2);
+}
+
+//Summary All Time
+function filterSumAll() {
+  let totalTrans = 0;
+  let amt = 0.0;
+  const records = getRecords();
+
+  for (let i = 0; i < records.length; i++) {
+    totalTrans++;
+    amt += parseFloat(records[i].amount);
+  }
+
+  setAverageSpend(amt, totalTrans);
+  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
+  document.getElementById("timeSpent").innerHTML = "Spent So Far";
+  document.getElementById("numTransactions").innerHTML = totalTrans;
+  document.getElementById("filteredBy").innerHTML = "All Time";
+  return amt, totalTrans;
+}
+
+//Summary Current Week
+function filterSumByWeek() {
+  let totalTrans = 0;
+  let amt = 0.0;
+  const records = getRecords();
+  const start = dayjs().startOf('week').add(1, 'day'); //1 (+1 to make monday first)
+  const end = dayjs(start).add(6, 'day').endOf('day'); //6 (+6 to make sunday as last)
+
+  for (let i = 0; i < records.length; i++) {
+    const recordDate = dayjs(records[i].date);
+    if (recordDate >= start && recordDate <= end) {
+      totalTrans++;
+      amt += parseFloat(records[i].amount);
+    }
+  }
+  setAverageSpend(amt, totalTrans);
+  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
+  document.getElementById("timeSpent").innerHTML = "For This Week";
+  document.getElementById("numTransactions").innerHTML = totalTrans;
+  document.getElementById("filteredBy").innerHTML = "Current Week";
+  return amt, totalTrans;
+}
+
+//Summary Current Month
+function filterSumByMonth() {
+  let totalTrans = 0;
+  let amt = 0.0;
+  const records = getRecords();
+  const start = dayjs().startOf('month');
+  const end = dayjs().endOf('month');
+
+  for (let i = 0; i < records.length; i++) {
+    const recordDate = dayjs(records[i].date);
+    if (recordDate >= start && recordDate <= end) {
+      totalTrans++;
+      amt += parseFloat(records[i].amount);
+    }
+  }
+
+  setAverageSpend(amt, totalTrans);
+  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
+  document.getElementById("timeSpent").innerHTML = "For This Month";
+  document.getElementById("numTransactions").innerHTML = totalTrans;
+  document.getElementById("filteredBy").innerHTML = "Current Month";
+  return amt, totalTrans;
+}
