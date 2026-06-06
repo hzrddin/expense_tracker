@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy"
     content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="cordova.js"></script>
   <title>Personal Tracker</title>
+  <link rel="icon" href="components/images/logo-svg.svg">
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
   <link rel="stylesheet" href="components/css/main.css">
 
@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link" href="log.html">Activity Log</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="settings.html">Settings</a>
+            </li>
           </ul>
         </div>
 
@@ -73,7 +76,7 @@
             </div>
           </div>
 
-          <form>
+          <form class="needs-validation" validate>
             <div class="row g-3 mb-3">
               <div class="col-12 col-md-5">
                 <label for="expenseAmount" class="form-label small text-dark mb-1">Amount (RM)</label>
@@ -131,7 +134,7 @@
                 <img src="components/images/arrow-repeat.svg" width="16" height="16" alt="Reset">
                 Reset
               </button>
-              <button class="btn btn-success d-flex align-items-center gap-2 px-4" type="submit">
+              <button class="btn btn-success d-flex align-items-center gap-2 px-4" onclick="saveRecord()" type="submit">
                 <img src="components/images/floppy.svg" width="16" height="16" alt="Save">
                 Save Expense
               </button>
@@ -172,6 +175,7 @@
     </ul>
   </nav>
 
+  <script src="components/js/main.js"></script>
   <script src="components/js/bootstrap.bundle.min.js"></script>
 </body>
 
