@@ -10,7 +10,6 @@
   <link rel="icon" href="components/images/logo-svg.svg">
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
   <link rel="stylesheet" href="components/css/main.css">
-
 </head>
 
 <body>
@@ -18,21 +17,17 @@
   <nav class="navbar navbar-dark bg-dark fixed-top" style="z-index: 1050;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Personal Expense</a>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
         aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="offcanvas offcanvas-end text-bg-dark w-75" tabindex="-1" id="offcanvasDarkNavbar"
         aria-labelledby="offcanvasDarkNavbarLabel">
-
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
         </div>
-
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
@@ -52,14 +47,13 @@
             </li>
           </ul>
         </div>
-
       </div>
     </div>
   </nav>
 
   <!-- Form -->
   <section class="container">
-    <div class="container d-flex justify-content-center align-items-center py-3"
+    <div class="d-flex justify-content-center align-items-center py-3"
       style="min-height: calc(100vh - 100px);">
 
       <div class="card bg-light border-0 shadow-sm rounded-4 w-100">
@@ -76,14 +70,17 @@
             </div>
           </div>
 
-          <form class="needs-validation" validate>
+          <!-- REMOVED: onclick="saveRecord()" and type="submit" stays on button;
+               validation is handled via the form's submit event in main.js -->
+          <form class="needs-validation" novalidate>
             <div class="row g-3 mb-3">
               <div class="col-12 col-md-5">
                 <label for="expenseAmount" class="form-label small text-dark mb-1">Amount (RM)</label>
                 <div class="input-group shadow-sm">
                   <span class="input-group-text icon-box text-dark border-end-0">RM</span>
                   <input type="number" class="form-control bg-input-beige border-start-0" id="expenseAmount"
-                    placeholder="0.00" min="0" step="0.01" required>
+                    placeholder="0.00" min="0.01" step="0.01" required>
+                  <div class="invalid-feedback">Please enter a valid amount greater than 0.</div>
                 </div>
               </div>
 
@@ -94,7 +91,9 @@
                     <img src="components/images/calendar3.svg" width="16" height="16" alt="Calendar">
                   </span>
                   <input type="date" class="form-control bg-input-beige border-start-0" id="expenseDate" required>
+                  <!-- Today button: wired in JS, no inline onclick needed -->
                   <button type="button" class="btn btn-light border">Today</button>
+                  <div class="invalid-feedback">Please select a date.</div>
                 </div>
               </div>
             </div>
@@ -115,6 +114,7 @@
                   <option value="Health">Health</option>
                   <option value="Others">Others</option>
                 </select>
+                <div class="invalid-feedback">Please select a category.</div>
               </div>
             </div>
 
@@ -134,7 +134,8 @@
                 <img src="components/images/arrow-repeat.svg" width="16" height="16" alt="Reset">
                 Reset
               </button>
-              <button class="btn btn-success d-flex align-items-center gap-2 px-4" onclick="saveRecord()" type="submit">
+              <!-- type="submit" triggers the form submit event — no onclick needed -->
+              <button class="btn btn-success d-flex align-items-center gap-2 px-4" type="submit">
                 <img src="components/images/floppy.svg" width="16" height="16" alt="Save">
                 Save Expense
               </button>
@@ -148,14 +149,12 @@
   <!-- Bottom Nav -->
   <nav class="navbar bg-dark fixed-bottom p-0 shadow-lg">
     <ul class="nav w-100 nav-justified align-items-center">
-
       <li class="nav-item">
         <a href="index.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
           <img src="components/images/home.png" alt="HOME" width="24" height="24">
           <span style="font-size: 10px;">HOME</span>
         </a>
       </li>
-
       <li class="nav-item position-relative">
         <a href="new.html" class="nav-link d-flex justify-content-center">
           <div
@@ -165,7 +164,6 @@
           </div>
         </a>
       </li>
-
       <li class="nav-item">
         <a href="transaction.html" class="nav-link text-light d-flex flex-column align-items-center py-2">
           <img src="components/images/transaction.png" alt="TRANSACTIONS" width="24" height="24">
