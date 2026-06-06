@@ -35,7 +35,7 @@ function saveRecord() {
 
 // Render table rows
 function renderLogs() {
-  const logBody = document.getElementById('logBody');
+  const logBody = document.getElementById('expenseTableBody');
   
   // Loop each row and build the string
   let rows = ""; // Create an empty bucket
