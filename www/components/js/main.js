@@ -19,7 +19,7 @@ function saveRecord() {
     amount: amount,
     date: date,
     category: category,
-    description: description, 
+    description: description,
     dateCreated: new Date().toLocaleDateString(),
     timeCreated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   };
@@ -35,17 +35,17 @@ function saveRecord() {
 // Render table rows
 function renderLogs() {
   const logBody = document.getElementById('expenseTableBody');
-  
+
   // Extra safety net: If logBody doesn't exist on this page, stop running the function
-  if (!logBody) return; 
+  if (!logBody) return;
 
   // Loop each row and build the string
-  let rows = ""; 
+  let rows = "";
 
   fincRec.forEach((record) => {
     // Logic for the Date Updated column
-    const updateDisplay = (record.dateUpdated && record.dateUpdated !== "") 
-      ? `${record.dateUpdated}<br><span class="text-muted small">${record.timeUpdated}</span>` 
+    const updateDisplay = (record.dateUpdated && record.dateUpdated !== "")
+      ? `${record.dateUpdated}<br><span class="text-muted small">${record.timeUpdated}</span>`
       : "N/A";
 
     // Build the row (Now with 8 columns!)
@@ -80,23 +80,28 @@ function renderLogs() {
   logBody.innerHTML = rows;
 }
 
+
 // Clear record
 function clearLogs() {
-  fincRec = [];
-  localStorage.removeItem('history');
-  renderLogs();
+
+  if (confirm("Are you sure to clear all transactions record?\nThis action can not be undone")) {
+
+    fincRec = [];
+    localStorage.removeItem('history');
+    renderLogs();
+  }
 }
 
 function deleteRecord(idToDelete) {
   // 1. Ask the user to confirm so they don't delete by accident
   if (confirm("Are you sure you want to delete this expense?")) {
-    
+
     // 2. Filter the array: Keep everything EXCEPT the one with the matching ID
     fincRec = fincRec.filter(record => record.id !== idToDelete);
-    
+
     // 3. Save the new, smaller array back to localStorage
     localStorage.setItem('history', JSON.stringify(fincRec));
-    
+
     // 4. Update the screen
     renderLogs();
   }
@@ -105,7 +110,7 @@ function deleteRecord(idToDelete) {
 // Wait for the HTML structure to fully load
 document.addEventListener('DOMContentLoaded', function () {
   const logBody = document.getElementById('expenseTableBody');
-  
+
   // If the table body exists, we are currently on transaction.html
   if (logBody) {
     renderLogs();
