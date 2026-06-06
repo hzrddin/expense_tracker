@@ -63,17 +63,17 @@
 
         <li class="nav-item" role="presentation">
           <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-week-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="false" onclick="filterData('week')">Current Week</button>
-        </li>
-
-        <li class="nav-item" role="presentation">
-          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-month-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="true" onclick="filterData('month')">Current Month</button>
+            type="button" role="tab" aria-selected="false" onclick="filterSumByWeek()">Current Week</button>
         </li>
 
         <li class="nav-item" role="presentation">
           <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-all-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="false" onclick="filterData('all')">All Time</button>
+            type="button" role="tab" aria-selected="false" onclick="filterSumAll()">All Time</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-month-tab" data-bs-toggle="pill"
+            type="button" role="tab" aria-selected="false" onclick="filterSumByMonth()">Current Month</button>
         </li>
 
       </ul>
@@ -92,7 +92,7 @@
 
           <div class="flex-grow-1 ms-3">
             <h6 class="mb-0 fw-bold text-title-dark">Total Spent</h6>
-            <h2 class="mb-0 fw-bold text-dark" id="totalAmount">RM 100,000,000</h2>
+            <h2 class="mb-0 fw-bold text-dark" id="totalAmount"></h2>
             <div class="text-secondary mb-1 text-xs" id="timeSpent"></div>
           </div>
 
@@ -182,9 +182,9 @@
               <img src="components/images/receipt-cutoff.svg" alt="Total Transactions">
             </div>
             <div class="ms-2">
-              <h5 class="mb-0 fw-bold" id="numTransactions">Total Trans</h5>
+              <h5 class="mb-0 fw-bold" id="numTransactions"></h5>
               <div class="text-secondary text-xxs lh-12">Transactions</div>
-              <div class="text-black-50 text-micro">This Month</div>
+              <div class="text-black-50 text-micro" id="filteredBy"></div>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@
               <img src="components/images/graph-up-arrow.svg" alt="Avg Spending">
             </div>
             <div class="ms-2">
-              <h5 class="mb-0 fw-bold" id="avgSpend">RM Test</h5>
+              <h5 class="mb-0 fw-bold" id="avgSpend"></h5>
               <div class="text-secondary text-xxs lh-12">Average Spend</div>
               <div class="text-black-50 text-micro">Per Transaction</div>
             </div>
@@ -277,7 +277,8 @@
 
     </ul>
   </nav>
-
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <script>dayjs().format()</script>
   <script src="components/js/main.js"></script>
   <script src="components/js/bootstrap.bundle.min.js"></script>
 </body>
