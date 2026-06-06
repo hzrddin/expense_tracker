@@ -67,7 +67,7 @@ function renderLogs() {
             <button class="btn btn-light border-0 p-2" title="Edit">
               <img src="components/images/pencil-square.svg" width="16" alt="Edit">
             </button>
-            <button class="btn btn-danger p-2" title="Delete">
+            <button class="btn btn-danger p-2" onclick="deleteRecord('${record.id}')" title="Delete">
               <img src="components/images/trash.svg" width="16" alt="Delete">
             </button>
           </div>
@@ -80,10 +80,26 @@ function renderLogs() {
   logBody.innerHTML = rows;
 }
 
+// Clear record
 function clearLogs() {
   fincRec = [];
   localStorage.removeItem('history');
   renderLogs();
+}
+
+function deleteRecord(idToDelete) {
+  // 1. Ask the user to confirm so they don't delete by accident
+  if (confirm("Are you sure you want to delete this expense?")) {
+    
+    // 2. Filter the array: Keep everything EXCEPT the one with the matching ID
+    fincRec = fincRec.filter(record => record.id !== idToDelete);
+    
+    // 3. Save the new, smaller array back to localStorage
+    localStorage.setItem('history', JSON.stringify(fincRec));
+    
+    // 4. Update the screen
+    renderLogs();
+  }
 }
 
 // Wait for the HTML structure to fully load
