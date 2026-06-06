@@ -147,3 +147,9 @@
 .resize-none {
   resize: none;
 }
+
+/* change active pill button color */
+#pills-tab .nav-link.active {
+  background-color: #dbccba;
+  border-color: transparent;
+}
