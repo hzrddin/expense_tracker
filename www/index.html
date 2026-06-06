@@ -53,8 +53,32 @@
       </div>
     </div>
   </nav>
-  
+
   <section class="container main-content-wrapper">
+
+    <!--Filter Summary-->
+    <div class="card bg-light border-0 shadow-sm w-100 mb-2">
+
+      <ul class="nav nav-pills nav-justified p-1 shadow-sm" id="pills-tab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-week-tab" data-bs-toggle="pill"
+            type="button" role="tab" aria-selected="false" onclick="filterData('week')">Current Week</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-month-tab" data-bs-toggle="pill"
+            type="button" role="tab" aria-selected="true" onclick="filterData('month')">Current Month</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-all-tab" data-bs-toggle="pill"
+            type="button" role="tab" aria-selected="false" onclick="filterData('all')">All Time</button>
+        </li>
+
+      </ul>
+
+    </div>
 
     <!--Total Spent-->
     <div class="card bg-light border-0 shadow-sm w-100 mb-2">
@@ -68,8 +92,8 @@
 
           <div class="flex-grow-1 ms-3">
             <h6 class="mb-0 fw-bold text-title-dark">Total Spent</h6>
-            <h2 class="mb-0 fw-bold text-dark">RM 100,000,000</h2>
-            <div class="text-secondary mb-1 text-xs">Spent this Month</div>
+            <h2 class="mb-0 fw-bold text-dark" id="totalAmount">RM 100,000,000</h2>
+            <div class="text-secondary mb-1 text-xs" id="timeSpent"></div>
           </div>
 
         </div>
