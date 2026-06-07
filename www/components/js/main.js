@@ -601,13 +601,13 @@ function drawPieChart(catArray) {
       datasets: [{
         data: dataValues,
         backgroundColor: [
-          '#FF6B6B', // Food 
-          '#4ECDC4', // Transport 
-          '#FFE66D', // Entertainment 
-          '#1A535C', // Education
-          '#FF9F1C', // Shopping
-          '#C8B6FF', // Health
-          '#95D5B2'  // Others
+          '#FF3B30', // Food 
+          '#FF9500', // Transport 
+          '#FFCC00', // Entertainment 
+          '#34C759', // Education
+          '#007AFF', // Shopping
+          '#AF52DE', // Health
+          '#10eccf'  // Others
         ],
         borderWidth: 2,
         borderColor: '#ffffff' // White borders
