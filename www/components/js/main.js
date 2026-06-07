@@ -437,6 +437,8 @@ document.addEventListener('DOMContentLoaded', function () {
   filterSummary('all');
 });
 
+//Chart
+let expenseChart = null;
 
 // Filter
 function filterSummary(timeframe) {
@@ -446,7 +448,7 @@ function filterSummary(timeframe) {
   let highest = 0.0, highCat = "", highDate = null, highDesc = "";
   let start, end;
   
-  // 1. Create a blank dictionary to hold our category buckets
+  // Blank dictionary to hold our category buckets
   let categoryTotals = {}; 
 
   // Define the start and end dates
@@ -551,4 +553,54 @@ function filterSummary(timeframe) {
 
   // Inject into your HTML container
   document.getElementById("categoryListContainer").innerHTML = catHTML;
+  drawPieChart(catArray);
+}
+
+//Chart
+function drawPieChart(catArray) {
+  const ctx = document.getElementById('Chart').getContext('2d');
+
+  // 1. Destroy the old chart if it exists to prevent hover glitches
+  if (expenseChart !== null) {
+    expenseChart.destroy();
+  }
+
+  // 2. Break our array into two separate lists: Labels and Money
+  const labels = catArray.map(item => item.name);
+  const dataValues = catArray.map(item => item.total);
+
+  // 3. Draw the new Chart
+  expenseChart = new Chart(ctx, {
+    type: 'pie', // You can change this to 'doughnut' for a modern ring shape!
+    data: {
+      labels: labels,
+      datasets: [{
+        data: dataValues,
+        backgroundColor: [
+          '#FF6B6B', // Food (Red)
+          '#4ECDC4', // Transport (Teal)
+          '#FFE66D', // Entertainment (Yellow)
+          '#1A535C', // Education (Dark Blue)
+          '#FF9F1C', // Shopping (Orange)
+          '#C8B6FF', // Health (Purple)
+          '#95D5B2'  // Others (Green)
+        ],
+        borderWidth: 2,
+        borderColor: '#ffffff' // White borders between slices look clean
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right', // Puts the labels on the right side
+          labels: {
+            usePointStyle: true, // Makes the legend boxes circular
+            boxWidth: 8
+          }
+        }
+      }
+    }
+  });
 }
