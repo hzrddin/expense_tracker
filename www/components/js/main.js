@@ -557,7 +557,6 @@ function filterSummary(timeframe) {
 }
 
 //Chart
-//Chart
 function drawPieChart(catArray) {
   const ctx = document.getElementById('Chart').getContext('2d');
 
@@ -587,7 +586,7 @@ function drawPieChart(catArray) {
         }
       }
     });
-    return; // Stop the function here so it doesn't run the code below
+    return; // Stop function
   }
 
   // Breakdown array into; Labels and Money
@@ -611,7 +610,7 @@ function drawPieChart(catArray) {
           '#95D5B2'  // Others
         ],
         borderWidth: 2,
-        borderColor: '#ffffff' // White borders between slices look clean
+        borderColor: '#ffffff' // White borders
       }]
     },
     options: {
