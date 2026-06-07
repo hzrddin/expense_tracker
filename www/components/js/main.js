@@ -431,80 +431,201 @@ function showToast(message, type = 'success') {
 
 // Runs on every page
 document.addEventListener('DOMContentLoaded', function () {
-  // Render exist table
+  // Render exist table & info
   renderTransactions();
   renderActivityLog();
-  filterSumAll();
+  filterSummary('all');
 });
 
-//Set Avg
-function setAverageSpend(amt, totalTrans) {
-  const avg = totalTrans === 0 ? 0 : amt / totalTrans;
-  document.getElementById("avgSpend").innerHTML = "RM " + avg.toFixed(2);
-}
+//Chart
+let expenseChart = null;
 
-//Summary All Time
-function filterSumAll() {
+// Filter
+function filterSummary(timeframe) {
+  const records = getRecords();
   let totalTrans = 0;
   let amt = 0.0;
-  const records = getRecords();
+  let highest = 0.0, highCat = "", highDate = null, highDesc = "";
+  let start, end;
+  
+  // Blank dictionary to hold our category buckets
+  let categoryTotals = {}; 
 
-  for (let i = 0; i < records.length; i++) {
-    totalTrans++;
-    amt += parseFloat(records[i].amount);
+  // Define the start and end dates
+  if (timeframe === 'week') {
+    start = dayjs().startOf('week').add(1, 'day'); // Starts on Monday
+    end = dayjs(start).add(6, 'day').endOf('day'); // Ends on Sunday
+  } else if (timeframe === 'month') {
+    start = dayjs().startOf('month');
+    end = dayjs().endOf('month');
   }
 
-  setAverageSpend(amt, totalTrans);
-  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "Spent So Far";
-  document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "All Time";
-  return amt, totalTrans;
-}
-
-//Summary Current Week
-function filterSumByWeek() {
-  let totalTrans = 0;
-  let amt = 0.0;
-  const records = getRecords();
-  const start = dayjs().startOf('week').add(1, 'day'); //1 (+1 to make monday first)
-  const end = dayjs(start).add(6, 'day').endOf('day'); //6 (+6 to make sunday as last)
-
+  // Loop each records to calculate math
   for (let i = 0; i < records.length; i++) {
     const recordDate = dayjs(records[i].date);
-    if (recordDate >= start && recordDate <= end) {
-      totalTrans++;
-      amt += parseFloat(records[i].amount);
+    let isWithinRange = true;
+
+    //if week/month, check the dates
+    if (timeframe !== 'all') {
+      isWithinRange = (recordDate >= start && recordDate <= end);
     }
-  }
-  setAverageSpend(amt, totalTrans);
-  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "For This Week";
-  document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "Current Week";
-  return amt, totalTrans;
-}
 
-//Summary Current Month
-function filterSumByMonth() {
-  let totalTrans = 0;
-  let amt = 0.0;
-  const records = getRecords();
-  const start = dayjs().startOf('month');
-  const end = dayjs().endOf('month');
+    if (isWithinRange) {
+      const currentAmount = parseFloat(records[i].amount); 
+      const currentCat = records[i].category; // Grab the category name
 
-  for (let i = 0; i < records.length; i++) {
-    const recordDate = dayjs(records[i].date);
-    if (recordDate >= start && recordDate <= end) {
       totalTrans++;
-      amt += parseFloat(records[i].amount);
+      amt += currentAmount;
+
+      // Bigger than the highest single transaction so far?
+      if (currentAmount > highest) {
+        highest = currentAmount;
+        highCat = currentCat;
+        highDate = records[i].date;
+        highDesc = records[i].description;
+      }
+
+      // 2. Add the amount to its specific category bucket!
+      if (!categoryTotals[currentCat]) {
+        categoryTotals[currentCat] = 0; // If bucket doesn't exist, create it at 0
+      }
+      categoryTotals[currentCat] += currentAmount;
     }
   }
 
-  setAverageSpend(amt, totalTrans);
+  // --- DOM UPDATES ---
+
+  // Highest Single Expense
+  if (highest > 0) {
+    document.getElementById("highestAmount").innerHTML = "RM " + highest.toFixed(2); // Fixed ID match here!
+    document.getElementById("highestCat").innerHTML = highCat;
+    document.getElementById("highestDesc").innerHTML = highDesc;
+    document.getElementById("highestDate").innerHTML = dayjs(highDate).format('DD MMM YYYY');
+  } else {
+    document.getElementById("highestAmount").innerHTML = "RM 0.00";
+    document.getElementById("highestCat").innerHTML = "No expenses";
+    document.getElementById("highestDesc").innerHTML = "-";
+    document.getElementById("highestDate").innerHTML = "-";
+  }
+
+  // Math & Text DOM
+  document.getElementById("avgSpend").innerHTML = "RM " + (totalTrans === 0 ? 0 : amt / totalTrans).toFixed(2);
   document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "For This Month";
   document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "Current Month";
-  return amt, totalTrans;
+
+  if (timeframe === 'week') {
+    document.getElementById("timeSpent").innerHTML = "For This Week";
+    document.getElementById("filteredBy").innerHTML = "Current Week";
+  } else if (timeframe === 'month') {
+    document.getElementById("timeSpent").innerHTML = "For This Month";
+    document.getElementById("filteredBy").innerHTML = "Current Month";
+  } else {
+    document.getElementById("timeSpent").innerHTML = "Spent So Far";
+    document.getElementById("filteredBy").innerHTML = "All Time";
+  }
+
+  // Process the Category Data & Update DOM
+  const catArray = Object.keys(categoryTotals).map(catName => {
+    return { name: catName, total: categoryTotals[catName] };
+  });
+
+  // Sort Desc
+  catArray.sort((a, b) => b.total - a.total);
+
+  // Build the HTML
+  let catHTML = "";
+  if (catArray.length === 0) {
+    catHTML = `<div class="text-center text-secondary text-sm py-3">No expenses found.</div>`;
+  } else {
+    for (let i = 0; i < catArray.length; i++) {
+      let cssClass = "bg-cat-" + catArray[i].name.toLowerCase();
+      let borderClass = (i === catArray.length - 1) ? "" : "border-bottom";
+
+      catHTML += `
+        <div class="d-flex align-items-center py-2 ${borderClass}">
+          <div class="rounded category-swatch ${cssClass}"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">${catArray[i].name}</div>
+          <div class="fw-medium text-sm">RM ${catArray[i].total.toFixed(2)}</div>
+        </div>
+      `;
+    }
+  }
+
+  // Inject into your HTML container
+  document.getElementById("categoryListContainer").innerHTML = catHTML;
+  drawPieChart(catArray);
+}
+
+//Chart
+//Chart
+function drawPieChart(catArray) {
+  const ctx = document.getElementById('Chart').getContext('2d');
+
+  // Remove old chart
+  if (expenseChart !== null) {
+    expenseChart.destroy();
+  }
+
+  // Check if there are no expenses recorded yet
+  if (catArray.length === 0) {
+    expenseChart = new Chart(ctx, {
+      type: 'doughnut', 
+      data: {
+        labels: ['No Data'],
+        datasets: [{
+          data: [1], // Single solid slice
+          backgroundColor: ['#e9ecef'], // Light grey
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // Hide the legend
+          tooltip: { enabled: false } // Disable hover effects
+        }
+      }
+    });
+    return; // Stop the function here so it doesn't run the code below
+  }
+
+  // Breakdown array into; Labels and Money
+  const labels = catArray.map(item => item.name);
+  const dataValues = catArray.map(item => item.total);
+
+  // Draw the new Chart
+  expenseChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: dataValues,
+        backgroundColor: [
+          '#FF6B6B', // Food 
+          '#4ECDC4', // Transport 
+          '#FFE66D', // Entertainment 
+          '#1A535C', // Education
+          '#FF9F1C', // Shopping
+          '#C8B6FF', // Health
+          '#95D5B2'  // Others
+        ],
+        borderWidth: 2,
+        borderColor: '#ffffff' // White borders between slices look clean
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right', //labels on right
+          labels: {
+            usePointStyle: true,
+            boxWidth: 8
+          }
+        }
+      }
+    }
+  });
 }
