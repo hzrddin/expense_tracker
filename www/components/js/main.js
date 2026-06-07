@@ -557,33 +557,58 @@ function filterSummary(timeframe) {
 }
 
 //Chart
+//Chart
 function drawPieChart(catArray) {
   const ctx = document.getElementById('Chart').getContext('2d');
 
-  // 1. Destroy the old chart if it exists to prevent hover glitches
+  // Remove old chart
   if (expenseChart !== null) {
     expenseChart.destroy();
   }
 
-  // 2. Break our array into two separate lists: Labels and Money
+  // Check if there are no expenses recorded yet
+  if (catArray.length === 0) {
+    expenseChart = new Chart(ctx, {
+      type: 'doughnut', 
+      data: {
+        labels: ['No Data'],
+        datasets: [{
+          data: [1], // Single solid slice
+          backgroundColor: ['#e9ecef'], // Light grey
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // Hide the legend
+          tooltip: { enabled: false } // Disable hover effects
+        }
+      }
+    });
+    return; // Stop the function here so it doesn't run the code below
+  }
+
+  // Breakdown array into; Labels and Money
   const labels = catArray.map(item => item.name);
   const dataValues = catArray.map(item => item.total);
 
-  // 3. Draw the new Chart
+  // Draw the new Chart
   expenseChart = new Chart(ctx, {
-    type: 'pie', // You can change this to 'doughnut' for a modern ring shape!
+    type: 'doughnut',
     data: {
       labels: labels,
       datasets: [{
         data: dataValues,
         backgroundColor: [
-          '#FF6B6B', // Food (Red)
-          '#4ECDC4', // Transport (Teal)
-          '#FFE66D', // Entertainment (Yellow)
-          '#1A535C', // Education (Dark Blue)
-          '#FF9F1C', // Shopping (Orange)
-          '#C8B6FF', // Health (Purple)
-          '#95D5B2'  // Others (Green)
+          '#FF6B6B', // Food 
+          '#4ECDC4', // Transport 
+          '#FFE66D', // Entertainment 
+          '#1A535C', // Education
+          '#FF9F1C', // Shopping
+          '#C8B6FF', // Health
+          '#95D5B2'  // Others
         ],
         borderWidth: 2,
         borderColor: '#ffffff' // White borders between slices look clean
@@ -594,9 +619,9 @@ function drawPieChart(catArray) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'right', // Puts the labels on the right side
+          position: 'right', //labels on right
           labels: {
-            usePointStyle: true, // Makes the legend boxes circular
+            usePointStyle: true,
             boxWidth: 8
           }
         }
