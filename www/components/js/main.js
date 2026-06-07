@@ -447,9 +447,9 @@ function filterSummary(timeframe) {
   let amt = 0.0;
   let highest = 0.0, highCat = "", highDate = null, highDesc = "";
   let start, end;
-  
+
   // Blank dictionary to hold our category buckets
-  let categoryTotals = {}; 
+  let categoryTotals = {};
 
   // Define the start and end dates
   if (timeframe === 'week') {
@@ -471,7 +471,7 @@ function filterSummary(timeframe) {
     }
 
     if (isWithinRange) {
-      const currentAmount = parseFloat(records[i].amount); 
+      const currentAmount = parseFloat(records[i].amount);
       const currentCat = records[i].category; // Grab the category name
 
       totalTrans++;
@@ -568,7 +568,7 @@ function drawPieChart(catArray) {
   // Check if there are no expenses recorded yet
   if (catArray.length === 0) {
     expenseChart = new Chart(ctx, {
-      type: 'doughnut', 
+      type: 'doughnut',
       data: {
         labels: ['No Data'],
         datasets: [{
