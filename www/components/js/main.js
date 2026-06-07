@@ -558,7 +558,7 @@ function filterSummary(timeframe) {
 
 //Chart
 function drawPieChart(catArray) {
-  const ctx = document.getElementById('Chart').getContext('2d');
+  const ctx = document.getElementById('expenseChart').getContext('2d');
 
   // Remove old chart
   if (expenseChart !== null) {
