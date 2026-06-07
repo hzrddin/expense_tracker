@@ -153,18 +153,17 @@ function saveRecord() {
 }
 
 // Today button 
-
-function getTodayISO() {
-  return new Date().toISOString().split('T')[0];
-}
-
 function setToday() {
   const el = document.getElementById('expenseDate');
-  if (el) el.value = getTodayISO();
+  if (el) {
+    const today = new Date();
+    // Adjust to local tz
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    el.value = today.toISOString().slice(0, 10);
+  }
 }
 
 // Trans - render table
-
 function renderTransactions() {
   const tbody = document.getElementById('expenseTableBody');
   if (!tbody) return;
@@ -431,10 +430,15 @@ function showToast(message, type = 'success') {
 
 // Runs on every page
 document.addEventListener('DOMContentLoaded', function () {
+  const currentPage = window.location.pathname.split('/').pop();
   // Render exist table & info
   renderTransactions();
   renderActivityLog();
-  filterSummary('all');
+  
+  // Auto render filter by all on index
+  if (currentPage === 'index.html' || currentPage === '') {
+    filterSummary('all');
+  }
 });
 
 //Chart
