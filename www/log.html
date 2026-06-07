@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy"
     content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="cordova.js"></script>
+  <link rel="icon" href="components/images/logo-svg.svg">
   <title>Personal Tracker</title>
   <link rel="stylesheet" href="components/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="components/css/main.css">
 </head>
 
 <body>
@@ -43,6 +43,9 @@
               <li class="nav-item">
                 <a class="nav-link active" href="log.html">Activity Log</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="settings.html">Settings</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -50,58 +53,33 @@
     </nav>
   </div>
 
-  <div class="container-fluid pt-5 mt-3">
-    <div class="table-responsive">
-      <table class="table table-striped w-100">
-        <thead>
-          <tr>
-            <th scope="col" class="text-nowrap">#ID</th>
-            <th scope="col" class="text-nowrap">Date/Time</th>
-            <th scope="col" class="text-nowrap">Interaction</th>
-            <th scope="col" class="text-nowrap">Related Expense ID</th>
-          </tr>
-        </thead>
+  <section class="container main-content-wrapper">
+    <div class="card bg-light border-0 shadow-sm w-100 mb-2">
+      <div class="card-body p-3">
 
-        <tbody>
-          <tr>
-            <th scope="row" class="text-nowrap">LOG-001</th>
-            <td class="text-nowrap">2026-06-01 13:05</td>
-            <td >Add New Expense</td>
-            <td class="text-nowrap">EXP-1001</td>
-          </tr>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0 fw-bold text-dark">Activity Log</h5>
+        </div>
 
-          <tr>
-            <th scope="row" class="text-nowrap">LOG-002</th>
-            <td>2026-06-02 08:20</td>
-            <td>View Expense Details</td>
-            <td class="text-nowrap">EXP-1002</td>
-          </tr>
+        <div class="table-responsive bg-white rounded border">
+          <table class="table table-hover align-middle mb-0 w-100">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col" class="text-nowrap px-3 py-3 border-0">#ID</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Date / Time</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Action</th>
+                <th scope="col" class="text-nowrap border-0 py-3">Related Expense ID</th>
+              </tr>
+            </thead>
+            <!-- IMPORTANT: id must be activityLogBody, not expenseTableBody -->
+            <tbody id="activityLogBody" class="border-top-0">
+            </tbody>
+          </table>
+        </div>
 
-          <tr>
-            <th scope="row" class="text-nowrap">LOG-003</th>
-            <td>2026-06-04 09:12</td>
-            <td>Edit Expense Amount</td>
-            <td class="text-nowrap">EXP-1003</td>
-          </tr>
-
-          <tr>
-            <th scope="row" class="text-nowrap">LOG-004</th>
-            <td>2026-06-04 14:25</td>
-            <td>View Expense Details</td>
-            <td class="text-nowrap">EXP-1005</td>
-          </tr>
-
-          <tr>
-            <th scope="row" class="text-nowrap">LOG-005</th>
-            <td>2026-06-05 10:00</td>
-            <td>Delete Expense Record</td>
-            <td class="text-nowrap">EXP-1007</td>
-          </tr>
-        </tbody>
-
-      </table>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Bottom Nav -->
   <div class="container">
@@ -132,6 +110,7 @@
     </nav>
   </div>
 
+  <script src="components/js/main.js"></script>
   <script src="components/js/bootstrap.bundle.min.js"></script>
 </body>
 
