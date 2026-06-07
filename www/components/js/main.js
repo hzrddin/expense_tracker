@@ -495,9 +495,8 @@ function filterSummary(timeframe) {
 
   // --- DOM UPDATES ---
 
-  // Highest Single Expense
   if (highest > 0) {
-    document.getElementById("highestAmount").innerHTML = "RM " + highest.toFixed(2); // Fixed ID match here!
+    document.getElementById("highestAmount").innerHTML = "RM " + highest.toFixed(2);
     document.getElementById("highestCat").innerHTML = highCat;
     document.getElementById("highestDesc").innerHTML = highDesc;
     document.getElementById("highestDate").innerHTML = dayjs(highDate).format('DD MMM YYYY');
@@ -558,7 +557,7 @@ function filterSummary(timeframe) {
 
 //Chart
 function drawPieChart(catArray) {
-  const ctx = document.getElementById('expenseChart').getContext('2d');
+  const ctx = document.getElementById('expenseChartCanvas').getContext('2d');
 
   // Remove old chart
   if (expenseChart !== null) {
