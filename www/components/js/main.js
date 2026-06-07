@@ -445,6 +445,9 @@ function filterSummary(timeframe) {
   let amt = 0.0;
   let highest = 0.0, highCat = "", highDate = null, highDesc = "";
   let start, end;
+  
+  // 1. Create a blank dictionary to hold our category buckets
+  let categoryTotals = {}; 
 
   // Define the start and end dates
   if (timeframe === 'week') {
@@ -467,40 +470,47 @@ function filterSummary(timeframe) {
 
     if (isWithinRange) {
       const currentAmount = parseFloat(records[i].amount); 
+      const currentCat = records[i].category; // Grab the category name
 
       totalTrans++;
       amt += currentAmount;
 
-      // Bigger than the highest so far?
+      // Bigger than the highest single transaction so far?
       if (currentAmount > highest) {
         highest = currentAmount;
-        highCat = records[i].category;
+        highCat = currentCat;
         highDate = records[i].date;
         highDesc = records[i].description;
       }
+
+      // 2. Add the amount to its specific category bucket!
+      if (!categoryTotals[currentCat]) {
+        categoryTotals[currentCat] = 0; // If bucket doesn't exist, create it at 0
+      }
+      categoryTotals[currentCat] += currentAmount;
     }
   }
 
-  // Highest Expense
+  // --- DOM UPDATES ---
+
+  // Highest Single Expense
   if (highest > 0) {
-    document.getElementById("highestAmt").innerHTML = "RM " + highest.toFixed(2);
+    document.getElementById("highestAmount").innerHTML = "RM " + highest.toFixed(2); // Fixed ID match here!
     document.getElementById("highestCat").innerHTML = highCat;
     document.getElementById("highestDesc").innerHTML = highDesc;
     document.getElementById("highestDate").innerHTML = dayjs(highDate).format('DD MMM YYYY');
   } else {
-    // if no expense
     document.getElementById("highestAmount").innerHTML = "RM 0.00";
     document.getElementById("highestCat").innerHTML = "No expenses";
     document.getElementById("highestDesc").innerHTML = "-";
     document.getElementById("highestDate").innerHTML = "-";
   }
 
-  // Update Math DOM
+  // Math & Text DOM
   document.getElementById("avgSpend").innerHTML = "RM " + (totalTrans === 0 ? 0 : amt / totalTrans).toFixed(2);
   document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
   document.getElementById("numTransactions").innerHTML = totalTrans;
 
-  // Update the Text DOM 
   if (timeframe === 'week') {
     document.getElementById("timeSpent").innerHTML = "For This Week";
     document.getElementById("filteredBy").innerHTML = "Current Week";
@@ -511,4 +521,34 @@ function filterSummary(timeframe) {
     document.getElementById("timeSpent").innerHTML = "Spent So Far";
     document.getElementById("filteredBy").innerHTML = "All Time";
   }
+
+  // Process the Category Data & Update DOM
+  const catArray = Object.keys(categoryTotals).map(catName => {
+    return { name: catName, total: categoryTotals[catName] };
+  });
+
+  // Sort Desc
+  catArray.sort((a, b) => b.total - a.total);
+
+  // Build the HTML
+  let catHTML = "";
+  if (catArray.length === 0) {
+    catHTML = `<div class="text-center text-secondary text-sm py-3">No expenses found.</div>`;
+  } else {
+    for (let i = 0; i < catArray.length; i++) {
+      let cssClass = "bg-cat-" + catArray[i].name.toLowerCase();
+      let borderClass = (i === catArray.length - 1) ? "" : "border-bottom";
+
+      catHTML += `
+        <div class="d-flex align-items-center py-2 ${borderClass}">
+          <div class="rounded category-swatch ${cssClass}"></div>
+          <div class="ms-3 flex-grow-1 text-secondary text-sm">${catArray[i].name}</div>
+          <div class="fw-medium text-sm">RM ${catArray[i].total.toFixed(2)}</div>
+        </div>
+      `;
+    }
+  }
+
+  // Inject into your HTML container
+  document.getElementById("categoryListContainer").innerHTML = catHTML;
 }
