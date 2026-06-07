@@ -63,17 +63,17 @@
 
         <li class="nav-item" role="presentation">
           <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-week-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="false" onclick="filterSumByWeek()">Current Week</button>
+            type="button" role="tab" aria-selected="false" onclick="filterSummary('week')">Current Week</button>
         </li>
 
         <li class="nav-item" role="presentation">
-          <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-all-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="false" onclick="filterSumAll()">All Time</button>
+          <button class="text-nowrap active nav-link text-dark fw-semibold" id="pills-all-tab" data-bs-toggle="pill"
+            type="button" role="tab" aria-selected="false" onclick="filterSummary('all')">All Time</button>
         </li>
 
         <li class="nav-item" role="presentation">
           <button class="text-nowrap nav-link text-dark fw-semibold" id="pills-month-tab" data-bs-toggle="pill"
-            type="button" role="tab" aria-selected="false" onclick="filterSumByMonth()">Current Month</button>
+            type="button" role="tab" aria-selected="false" onclick="filterSummary('month')">Current Month</button>
         </li>
 
       </ul>
@@ -221,11 +221,11 @@
                 <img src="components/images/cart2.svg" width="22" height="22" fill="currentColor" alt="Highest Expense">
               </div>
               <div class="ms-3">
-                <h4 class="mb-0 fw-bold text-red-dark">RM 155.00</h4>
-                <div class="text-dark fw-medium text-sm lh-12">Food</div>
+                <h4 class="mb-0 fw-bold text-red-dark" id="highestAmt"></h4>
+                <div class="text-dark fw-medium text-sm lh-12" id="highestCat"></div>
                 <div class="text-secondary d-flex align-items-center mt-1 text-xxs">
                   <img src="components/images/calendar3.svg" width="10" height="10" fill="currentColor" alt="Calendar">
-                  <span class="ms-1">1 Jun 2026</span>
+                  <span class="ms-1" id="highestDate"></span>
                 </div>
               </div>
             </div>
@@ -237,9 +237,7 @@
                 <img src="components/images/file-text.svg" alt="Description" width="12" height="12" fill="currentColor">
                 <span class="ms-1">Description</span>
               </div>
-              <div class="text-dark fw-medium text-xs lh-12">
-                Grocery Shopping
-              </div>
+              <div class="text-dark fw-medium text-xs lh-12" id="highestDesc"></div>
             </div>
           </div>
         </div>

@@ -431,80 +431,84 @@ function showToast(message, type = 'success') {
 
 // Runs on every page
 document.addEventListener('DOMContentLoaded', function () {
-  // Render exist table
+  // Render exist table & info
   renderTransactions();
   renderActivityLog();
-  filterSumAll();
+  filterSummary('all');
 });
 
-//Set Avg
-function setAverageSpend(amt, totalTrans) {
-  const avg = totalTrans === 0 ? 0 : amt / totalTrans;
-  document.getElementById("avgSpend").innerHTML = "RM " + avg.toFixed(2);
-}
 
-//Summary All Time
-function filterSumAll() {
+// Filter
+function filterSummary(timeframe) {
+  const records = getRecords();
   let totalTrans = 0;
   let amt = 0.0;
-  const records = getRecords();
+  let highest = 0.0, highCat = "", highDate = null, highDesc = "";
+  let start, end;
 
-  for (let i = 0; i < records.length; i++) {
-    totalTrans++;
-    amt += parseFloat(records[i].amount);
+  // Define the start and end dates
+  if (timeframe === 'week') {
+    start = dayjs().startOf('week').add(1, 'day'); // Starts on Monday
+    end = dayjs(start).add(6, 'day').endOf('day'); // Ends on Sunday
+  } else if (timeframe === 'month') {
+    start = dayjs().startOf('month');
+    end = dayjs().endOf('month');
   }
 
-  setAverageSpend(amt, totalTrans);
-  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "Spent So Far";
-  document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "All Time";
-  return amt, totalTrans;
-}
-
-//Summary Current Week
-function filterSumByWeek() {
-  let totalTrans = 0;
-  let amt = 0.0;
-  const records = getRecords();
-  const start = dayjs().startOf('week').add(1, 'day'); //1 (+1 to make monday first)
-  const end = dayjs(start).add(6, 'day').endOf('day'); //6 (+6 to make sunday as last)
-
+  // Loop each records to calculate math
   for (let i = 0; i < records.length; i++) {
     const recordDate = dayjs(records[i].date);
-    if (recordDate >= start && recordDate <= end) {
-      totalTrans++;
-      amt += parseFloat(records[i].amount);
+    let isWithinRange = true;
+
+    //if week/month, check the dates
+    if (timeframe !== 'all') {
+      isWithinRange = (recordDate >= start && recordDate <= end);
     }
-  }
-  setAverageSpend(amt, totalTrans);
-  document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "For This Week";
-  document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "Current Week";
-  return amt, totalTrans;
-}
 
-//Summary Current Month
-function filterSumByMonth() {
-  let totalTrans = 0;
-  let amt = 0.0;
-  const records = getRecords();
-  const start = dayjs().startOf('month');
-  const end = dayjs().endOf('month');
+    if (isWithinRange) {
+      const currentAmount = parseFloat(records[i].amount); 
 
-  for (let i = 0; i < records.length; i++) {
-    const recordDate = dayjs(records[i].date);
-    if (recordDate >= start && recordDate <= end) {
       totalTrans++;
-      amt += parseFloat(records[i].amount);
+      amt += currentAmount;
+
+      // Bigger than the highest so far?
+      if (currentAmount > highest) {
+        highest = currentAmount;
+        highCat = records[i].category;
+        highDate = records[i].date;
+        highDesc = records[i].description;
+      }
     }
   }
 
-  setAverageSpend(amt, totalTrans);
+  // Highest Expense
+  if (highest > 0) {
+    document.getElementById("highestAmt").innerHTML = "RM " + highest.toFixed(2);
+    document.getElementById("highestCat").innerHTML = highCat;
+    document.getElementById("highestDesc").innerHTML = highDesc;
+    document.getElementById("highestDate").innerHTML = dayjs(highDate).format('DD MMM YYYY');
+  } else {
+    // if no expense
+    document.getElementById("highestAmount").innerHTML = "RM 0.00";
+    document.getElementById("highestCat").innerHTML = "No expenses";
+    document.getElementById("highestDesc").innerHTML = "-";
+    document.getElementById("highestDate").innerHTML = "-";
+  }
+
+  // Update Math DOM
+  document.getElementById("avgSpend").innerHTML = "RM " + (totalTrans === 0 ? 0 : amt / totalTrans).toFixed(2);
   document.getElementById("totalAmount").innerHTML = amt.toFixed(2);
-  document.getElementById("timeSpent").innerHTML = "For This Month";
   document.getElementById("numTransactions").innerHTML = totalTrans;
-  document.getElementById("filteredBy").innerHTML = "Current Month";
-  return amt, totalTrans;
+
+  // Update the Text DOM 
+  if (timeframe === 'week') {
+    document.getElementById("timeSpent").innerHTML = "For This Week";
+    document.getElementById("filteredBy").innerHTML = "Current Week";
+  } else if (timeframe === 'month') {
+    document.getElementById("timeSpent").innerHTML = "For This Month";
+    document.getElementById("filteredBy").innerHTML = "Current Month";
+  } else {
+    document.getElementById("timeSpent").innerHTML = "Spent So Far";
+    document.getElementById("filteredBy").innerHTML = "All Time";
+  }
 }
