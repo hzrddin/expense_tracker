@@ -447,9 +447,9 @@ function filterSummary(timeframe) {
   let amt = 0.0;
   let highest = 0.0, highCat = "", highDate = null, highDesc = "";
   let start, end;
-  
+
   // Blank dictionary to hold our category buckets
-  let categoryTotals = {}; 
+  let categoryTotals = {};
 
   // Define the start and end dates
   if (timeframe === 'week') {
@@ -471,7 +471,7 @@ function filterSummary(timeframe) {
     }
 
     if (isWithinRange) {
-      const currentAmount = parseFloat(records[i].amount); 
+      const currentAmount = parseFloat(records[i].amount);
       const currentCat = records[i].category; // Grab the category name
 
       totalTrans++;
@@ -558,7 +558,7 @@ function filterSummary(timeframe) {
 
 //Chart
 function drawPieChart(catArray) {
-  const ctx = document.getElementById('Chart').getContext('2d');
+  const ctx = document.getElementById('expenseChart').getContext('2d');
 
   // Remove old chart
   if (expenseChart !== null) {
@@ -568,7 +568,7 @@ function drawPieChart(catArray) {
   // Check if there are no expenses recorded yet
   if (catArray.length === 0) {
     expenseChart = new Chart(ctx, {
-      type: 'doughnut', 
+      type: 'doughnut',
       data: {
         labels: ['No Data'],
         datasets: [{
@@ -601,13 +601,13 @@ function drawPieChart(catArray) {
       datasets: [{
         data: dataValues,
         backgroundColor: [
-          '#FF6B6B', // Food 
-          '#4ECDC4', // Transport 
-          '#FFE66D', // Entertainment 
-          '#1A535C', // Education
-          '#FF9F1C', // Shopping
-          '#C8B6FF', // Health
-          '#95D5B2'  // Others
+          '#FF3B30', // Food 
+          '#FF9500', // Transport 
+          '#FFCC00', // Entertainment 
+          '#34C759', // Education
+          '#007AFF', // Shopping
+          '#AF52DE', // Health
+          '#10eccf'  // Others
         ],
         borderWidth: 2,
         borderColor: '#ffffff' // White borders
