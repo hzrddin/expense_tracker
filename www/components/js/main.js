@@ -557,7 +557,6 @@ function filterSummary(timeframe) {
 }
 
 //Chart
-//Chart
 function drawPieChart(catArray) {
   const ctx = document.getElementById('Chart').getContext('2d');
 
@@ -567,7 +566,7 @@ function drawPieChart(catArray) {
   }
 
   // Check if there are no expenses recorded yet
-  if (catArray.length === 0) {
+if (catArray.length === 0) {
     expenseChart = new Chart(ctx, {
       type: 'doughnut', 
       data: {
@@ -583,13 +582,28 @@ function drawPieChart(catArray) {
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false }, // Hide the legend
-          tooltip: { enabled: false } // Disable hover effects
+          tooltip: { enabled: false }, // Disable hover effects
+          
+          title: {
+            display: true,
+            text: 'No Expense Recorded',
+            position: 'bottom',
+            color: '#6c757d',  
+            font: {
+              size: 14,
+              family: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+              weight: '500'
+            },
+            padding: {
+              top: 15
+            }
+          }
+
         }
       }
     });
-    return; // Stop the function here so it doesn't run the code below
+    return; // Stop func
   }
-
   // Breakdown array into; Labels and Money
   const labels = catArray.map(item => item.name);
   const dataValues = catArray.map(item => item.total);
@@ -611,7 +625,7 @@ function drawPieChart(catArray) {
           '#95D5B2'  // Others
         ],
         borderWidth: 2,
-        borderColor: '#ffffff' // White borders between slices look clean
+        borderColor: '#ffffff' // White borders
       }]
     },
     options: {
