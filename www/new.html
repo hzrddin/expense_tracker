@@ -60,8 +60,6 @@
             </div>
           </div>
 
-          <!-- type="button" on Save prevents any native form submit from firing.
-               onclick="saveRecord()" owns all validation and saving logic. -->
           <form class="needs-validation">
             <div class="row g-3 mb-3">
               <div class="col-12 col-md-5">
@@ -81,7 +79,6 @@
                     <img src="components/images/calendar3.svg" width="16" height="16" alt="Calendar">
                   </span>
                   <input type="date" class="form-control bg-input-beige border-start-0" id="expenseDate">
-                  <!-- onclick="setToday()" — wired directly, no addEventListener needed -->
                   <button type="button" class="btn btn-light border" onclick="setToday()">Today</button>
                   <div class="invalid-feedback">Please select a date.</div>
                 </div>

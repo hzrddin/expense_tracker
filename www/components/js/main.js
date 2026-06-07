@@ -153,18 +153,17 @@ function saveRecord() {
 }
 
 // Today button 
-
-function getTodayISO() {
-  return new Date().toISOString().split('T')[0];
-}
-
 function setToday() {
   const el = document.getElementById('expenseDate');
-  if (el) el.value = getTodayISO();
+  if (el) {
+    const today = new Date();
+    // Adjust to local tz
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    el.value = today.toISOString().slice(0, 10);
+  }
 }
 
 // Trans - render table
-
 function renderTransactions() {
   const tbody = document.getElementById('expenseTableBody');
   if (!tbody) return;
@@ -431,10 +430,15 @@ function showToast(message, type = 'success') {
 
 // Runs on every page
 document.addEventListener('DOMContentLoaded', function () {
+  const currentPage = window.location.pathname.split('/').pop();
   // Render exist table & info
   renderTransactions();
   renderActivityLog();
-  filterSummary('all');
+  
+  // Auto render filter by all on index
+  if (currentPage === 'index.html' || currentPage === '') {
+    filterSummary('all');
+  }
 });
 
 //Chart
@@ -567,12 +571,12 @@ function drawPieChart(catArray) {
   // Check if there are no expenses recorded yet
   if (catArray.length === 0) {
     expenseChart = new Chart(ctx, {
-      type: 'doughnut',
+      type: 'doughnut', 
       data: {
         labels: ['No Data'],
         datasets: [{
-          data: [1], // Single solid slice
-          backgroundColor: ['#e9ecef'], // Light grey
+          data: [1], 
+          backgroundColor: ['#e9ecef'], 
           borderWidth: 0
         }]
       },
@@ -580,17 +584,41 @@ function drawPieChart(catArray) {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false }, // Hide the legend
-          tooltip: { enabled: false } // Disable hover effects
+          legend: { display: false }, 
+          tooltip: { enabled: false }, 
+          title: {
+            display: true,
+            text: 'No Expense Recorded',
+            position: 'bottom', 
+            color: '#6c757d',   
+            font: {
+              size: 14,
+              family: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+              weight: '500'
+            },
+            padding: { top: 15 }
+          }
         }
       }
     });
-    return; // Stop function
+    return; 
   }
 
-  // Breakdown array into; Labels and Money
+  //Match with cat
+  const colorMap = {
+    'Food': '#FF3B30', 
+    'Transport': '#FF9500', 
+    'Entertainment': '#FFCC00', 
+    'Education': '#34C759',
+    'Shopping': '#007AFF',
+    'Health': '#AF52DE',
+    'Others': '#10eccf'
+  };
+
   const labels = catArray.map(item => item.name);
   const dataValues = catArray.map(item => item.total);
+  
+  const bgColors = catArray.map(item => colorMap[item.name] || '#cccccc');
 
   // Draw the new Chart
   expenseChart = new Chart(ctx, {
@@ -599,17 +627,9 @@ function drawPieChart(catArray) {
       labels: labels,
       datasets: [{
         data: dataValues,
-        backgroundColor: [
-          '#FF3B30', // Food 
-          '#FF9500', // Transport 
-          '#FFCC00', // Entertainment 
-          '#34C759', // Education
-          '#007AFF', // Shopping
-          '#AF52DE', // Health
-          '#10eccf'  // Others
-        ],
+        backgroundColor: bgColors, // <-- Inject the mapped colors here!
         borderWidth: 2,
-        borderColor: '#ffffff' // White borders
+        borderColor: '#ffffff'
       }]
     },
     options: {
@@ -617,7 +637,7 @@ function drawPieChart(catArray) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'right', //labels on right
+          position: 'right',
           labels: {
             usePointStyle: true,
             boxWidth: 8
