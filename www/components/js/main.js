@@ -173,7 +173,7 @@ function clearLogs() {
   localStorage.removeItem('expenseCounter');
   localStorage.removeItem('logCounter');
 
-  renderTransactions();
+  loadRealData();
   showToast('All records cleared.', 'warning');
 }
 
@@ -307,7 +307,7 @@ function saveEdit() {
   writeLog('Edited expense', id);
 
   bootstrap.Modal.getInstance(document.getElementById('editExpenseModal')).hide();
-  renderTransactions();
+  loadRealData();
   showToast('Expense updated successfully!', 'success');
 }
 
@@ -373,7 +373,7 @@ function showToast(message, type = 'success') {
 document.addEventListener('DOMContentLoaded', function () {
   const currentPage = window.location.pathname.split('/').pop();
   // Render exist table & info
-  renderTransactions();
+  loadRealData();
   renderActivityLog();
 
   // Auto render filter by all on index
