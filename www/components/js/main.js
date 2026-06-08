@@ -76,7 +76,7 @@ function resetFieldStates() {
   });
 }
 
-// New Expense
+// Add Expense
 
 function saveRecord() {
   const amountRaw = document.getElementById('expenseAmount').value.trim();
