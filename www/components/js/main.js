@@ -717,3 +717,61 @@ function changePage(event, newPage) {
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', loadRealData);
+
+// Grab current selected cat
+let currentCategoryFilter = 'All';
+
+// Dropdown Click Handler
+function setCategoryFilter(category) {
+  currentCategoryFilter = category;
+  
+  const btn = document.getElementById('dropdownMenuButton');
+  if (btn) {
+      if (category === 'All') {
+        btn.textContent = 'Filter Category';
+      } else {
+        btn.textContent = 'Category: ' + category;
+      }
+  }
+  
+  // update table
+  searchExpenses();
+}
+
+// combined filter
+function searchExpenses() {
+  const searchBox = document.getElementById('searchInput');
+  // Handle case where searchbox might not exist on the current page
+  const searchTerm = searchBox ? searchBox.value.toLowerCase().trim() : '';
+  
+  const allRecords = getRecords();
+
+  // Filter the list based on BOTH the text box and the dropdown
+  expenses = allRecords.filter(record => {
+    
+    // Check 1: Does it match the selected category? (Or is 'All' selected?)
+    const matchesCategory = (currentCategoryFilter === 'All') || (record.category === currentCategoryFilter);
+    
+    // Check 2: Does it match the typed search text?
+    const desc = (record.description || '').toLowerCase();
+    const matchesSearch = desc.includes(searchTerm);
+
+    // Keep the record ONLY if it passes both checks
+    return matchesCategory && matchesSearch;
+  });
+
+  // Jump to page 1 and rebuild table
+  currentPage = 1;
+  renderTable(currentPage);
+  renderPagination();
+}
+
+// Listen to keys 
+document.addEventListener('DOMContentLoaded', function () {
+  const searchBox = document.getElementById('searchInput');
+  if (searchBox) {
+    searchBox.addEventListener('input', function () {
+      searchExpenses(); 
+    });
+  }
+});

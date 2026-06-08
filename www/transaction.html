@@ -69,10 +69,11 @@
             <div class="col-12 col-md-7 mb-2 mb-md-0">
               <div class="input-group border rounded bg-white overflow-hidden">
 
-                <input type="search" class="form-control border-0 shadow-none"
-                  placeholder="Search By Description" aria-label="Search">
+                <input type="search" class="form-control border-0 shadow-none" placeholder="Search By Description"
+                  aria-label="Search" id="searchInput">
 
-                <button class="btn border-0 bg-transparent px-3 d-flex align-items-center" type="button">
+                <button class="btn border-0 bg-transparent px-3 d-flex align-items-center" type="button"
+                  onclick="searchExpenses()">
                   <img src="components/images/search.svg" width="16" height="16" alt="Search">
                 </button>
 
@@ -86,14 +87,14 @@
                   Filter Category
                 </button>
                 <div class="dropdown-menu bg-light w-100" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item">All Expenses</a>
-                  <a class="dropdown-item">Food</a>
-                  <a class="dropdown-item">Transport</a>
-                  <a class="dropdown-item">Entertainment</a>
-                  <a class="dropdown-item">Education</a>
-                  <a class="dropdown-item">Shopping</a>
-                  <a class="dropdown-item">Health</a>
-                  <a class="dropdown-item">Others</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('All')">All Expenses</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Food')">Food</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Transport')">Transport</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Entertainment')">Entertainment</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Education')">Education</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Shopping')">Shopping</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Health')">Health</a>
+                  <a class="dropdown-item" href="#" onclick="setCategoryFilter('Others')">Others</a>
                 </div>
               </div>
             </div>
