@@ -144,7 +144,7 @@ function saveRecord() {
 
   // Reset form and clear all validation states
   document.getElementById('expenseAmount').value = '';
-  document.getElementById('expenseDate').value = getTodayISO();
+  document.getElementById('expenseDate').value = '';
   document.getElementById('expenseCategory').value = '';
   document.getElementById('expenseDescription').value = '';
   resetFieldStates();
@@ -301,7 +301,7 @@ function openEditModal(id) {
   const record = getRecords().find(r => r.id === id);
   if (!record) return;
 
-  // Clear any leftover validation states from a previous open
+  // Clear any leftover
   ['editAmount', 'editDate', 'editCategory'].forEach(fid => {
     const el = document.getElementById(fid);
     if (el) el.classList.remove('is-invalid', 'is-valid');
