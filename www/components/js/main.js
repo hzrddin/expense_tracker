@@ -163,65 +163,6 @@ function setToday() {
   }
 }
 
-// Trans - render table
-function renderTransactions() {
-  const tbody = document.getElementById('expenseTableBody');
-  if (!tbody) return;
-
-  const records = getRecords();
-
-  if (records.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="8" class="text-center text-muted py-4">No expenses recorded yet.</td>
-      </tr>`;
-    return;
-  }
-
-  tbody.innerHTML = records.map(record => {
-    const updateDisplay = record.dateUpdated
-      ? `${record.dateUpdated}<br><span class="text-muted small">${record.timeUpdated}</span>`
-      : '<span class="text-muted small">—</span>';
-
-    return `
-      <tr>
-        <th scope="row" class="text-nowrap px-3 border-light">${record.id}</th>
-        <td class="text-nowrap border-light">${record.date}</td>
-        <td class="border-light">RM ${record.amount}</td>
-        <td class="border-light">${record.category}</td>
-        <td class="border-light">${record.description || '<span class="text-muted small">—</span>'}</td>
-        <td class="text-nowrap border-light">
-          ${record.dateCreated}<br><span class="text-muted small">${record.timeCreated}</span>
-        </td>
-        <td class="text-nowrap border-light">${updateDisplay}</td>
-        <td class="border-light">
-          <div class="d-flex align-items-center justify-content-center gap-2">
-            <button class="btn btn-light border-0 p-2" title="Edit" onclick="openEditModal('${record.id}')">
-              <img src="components/images/pencil-square.svg" width="16" alt="Edit">
-            </button>
-            <button class="btn btn-danger p-2" title="Delete" onclick="deleteRecord('${record.id}')">
-              <img src="components/images/trash.svg" width="16" alt="Delete">
-            </button>
-          </div>
-        </td>
-      </tr>`;
-  }).join('');
-}
-
-// Delete Transaction
-
-function deleteRecord(idToDelete) {
-  if (!confirm('Are you sure you want to delete this expense?\n\nThis action cannot be undone.')) return;
-
-  let records = getRecords();
-  records = records.filter(r => r.id !== idToDelete);
-  saveRecords(records);
-
-  writeLog('Deleted expense', idToDelete);
-  renderTransactions();
-  showToast('Expense deleted.', 'danger');
-}
-
 // Clear All Transactions
 
 function clearLogs() {
@@ -244,7 +185,7 @@ function ensureEditModal() {
   document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editExpenseModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 border-0 shadow">
+        <div class="bg-light modal-content rounded-4 border-0 shadow">
           <div class="modal-header border-0 pb-0">
             <h5 class="modal-title fw-bold">Edit Expense</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -434,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Render exist table & info
   renderTransactions();
   renderActivityLog();
-  
+
   // Auto render filter by all on index
   if (currentPage === 'index.html' || currentPage === '') {
     filterSummary('all');
@@ -571,12 +512,12 @@ function drawPieChart(catArray) {
   // Check if there are no expenses recorded yet
   if (catArray.length === 0) {
     expenseChart = new Chart(ctx, {
-      type: 'doughnut', 
+      type: 'doughnut',
       data: {
         labels: ['No Data'],
         datasets: [{
-          data: [1], 
-          backgroundColor: ['#e9ecef'], 
+          data: [1],
+          backgroundColor: ['#e9ecef'],
           borderWidth: 0
         }]
       },
@@ -584,13 +525,13 @@ function drawPieChart(catArray) {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false }, 
-          tooltip: { enabled: false }, 
+          legend: { display: false },
+          tooltip: { enabled: false },
           title: {
             display: true,
             text: 'No Expense Recorded',
-            position: 'bottom', 
-            color: '#6c757d',   
+            position: 'bottom',
+            color: '#6c757d',
             font: {
               size: 14,
               family: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
@@ -601,14 +542,14 @@ function drawPieChart(catArray) {
         }
       }
     });
-    return; 
+    return;
   }
 
   //Match with cat
   const colorMap = {
-    'Food': '#FF3B30', 
-    'Transport': '#FF9500', 
-    'Entertainment': '#FFCC00', 
+    'Food': '#FF3B30',
+    'Transport': '#FF9500',
+    'Entertainment': '#FFCC00',
     'Education': '#34C759',
     'Shopping': '#007AFF',
     'Health': '#AF52DE',
@@ -617,7 +558,7 @@ function drawPieChart(catArray) {
 
   const labels = catArray.map(item => item.name);
   const dataValues = catArray.map(item => item.total);
-  
+
   const bgColors = catArray.map(item => colorMap[item.name] || '#cccccc');
 
   // Draw the new Chart
@@ -647,3 +588,132 @@ function drawPieChart(catArray) {
     }
   });
 }
+
+let expenses = []; // hold array from getRecords()
+let currentPage = 1;
+const rowsPerPage = 6;
+
+// 1. Initial Load
+function loadRealData() {
+  expenses = getRecords();
+  renderTable(currentPage);
+  renderPagination();
+}
+
+// 2. Trans - Render Table
+function renderTable(page) {
+  const tbody = document.getElementById('expenseTableBody');
+  if (!tbody) return;
+
+  if (expenses.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center text-muted py-4">No expenses recorded yet.</td>
+      </tr>`;
+    return;
+  }
+
+  // Calculate slices for pagination
+  const start = (page - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+  const paginatedData = expenses.slice(start, end);
+
+  // 6 items/page
+  tbody.innerHTML = paginatedData.map(record => {
+    const updateDisplay = record.dateUpdated
+      ? `${record.dateUpdated}<br><span class="text-muted small">${record.timeUpdated}</span>`
+      : '<span class="text-muted small">—</span>';
+
+    return `
+      <tr>
+        <th scope="row" class="text-nowrap px-3 border-light">${record.id}</th>
+        <td class="text-nowrap border-light">${record.date}</td>
+        <td class="border-light">RM ${record.amount}</td>
+        <td class="border-light">${record.category}</td>
+        <td class="border-light">${record.description || '<span class="text-muted small">—</span>'}</td>
+        <td class="text-nowrap border-light">
+          ${record.dateCreated}<br><span class="text-muted small">${record.timeCreated}</span>
+        </td>
+        <td class="text-nowrap border-light">${updateDisplay}</td>
+        <td class="border-light">
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            <button class="btn btn-light border-0 p-2" title="Edit" onclick="openEditModal('${record.id}')">
+              <img src="components/images/pencil-square.svg" width="16" alt="Edit">
+            </button>
+            <button class="btn btn-danger p-2" title="Delete" onclick="deleteRecord('${record.id}')">
+              <img src="components/images/trash.svg" width="16" alt="Delete">
+            </button>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// Delete Transaction
+function deleteRecord(idToDelete) {
+  if (!confirm('Are you sure you want to delete this expense?\n\nThis action cannot be undone.')) return;
+
+  let records = getRecords();
+  records = records.filter(r => r.id !== idToDelete);
+  saveRecords(records);
+
+  expenses = records;
+
+  // If delete the last item on a page, jump back one page
+  const totalPages = Math.ceil(expenses.length / rowsPerPage);
+  if (currentPage > totalPages && currentPage > 1) {
+    currentPage = totalPages;
+  }
+
+  writeLog('Deleted expense', idToDelete);
+
+  // Re-render the paginated table and buttons
+  renderTable(currentPage);
+  renderPagination();
+  showToast('Expense deleted.', 'danger');
+}
+
+// Render Pagination Buttons
+function renderPagination() {
+  const paginationUl = document.getElementById('paginationControl');
+  if (!paginationUl) return;
+  paginationUl.innerHTML = "";
+
+  const totalPages = Math.ceil(expenses.length / rowsPerPage);
+  if (totalPages <= 1) return;
+
+  paginationUl.innerHTML += `
+    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+      <a class="page-link" href="#" onclick="changePage(event, ${currentPage - 1})">&laquo;</a>
+    </li>
+  `;
+
+  for (let i = 1; i <= totalPages; i++) {
+    paginationUl.innerHTML += `
+      <li class="page-item ${currentPage === i ? 'active' : ''}">
+        <a class="page-link" href="#" onclick="changePage(event, ${i})">${i}</a>
+      </li>
+    `;
+  }
+
+  paginationUl.innerHTML += `
+    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+      <a class="page-link" href="#" onclick="changePage(event, ${currentPage + 1})">&raquo;</a>
+    </li>
+  `;
+}
+
+// Page Clicks
+function changePage(event, newPage) {
+  event.preventDefault();
+  const totalPages = Math.ceil(expenses.length / rowsPerPage);
+
+  if (newPage >= 1 && newPage <= totalPages) {
+    currentPage = newPage;
+    renderTable(currentPage);
+    renderPagination();
+  }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', loadRealData);
